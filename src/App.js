@@ -232,7 +232,7 @@ function App() {
           <p>
             TEMPORARY HIT POINTS
           </p>
-          <textarea placeholder='0'>
+          <textarea placeholder='1'>
           </textarea>
           <div className='hit-dice-box'>
             <div>
