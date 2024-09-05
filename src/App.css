@@ -1,0 +1,136 @@
+.App {
+  text-align: center;
+}
+
+
+.upper-body-box{
+  width: 100%;
+}
+.Upper-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.Upper-body-lower {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.statscolumn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 100vh;
+  justify-content: space-between;
+}
+
+.hit-dice-box{
+  display: flex;
+}
+
+.hit-dice-textarea{
+  height: 10vh;
+}
+
+.death-saves-box{
+  display: flex;
+  flex-direction: column;
+  height: 10vh;
+}
+
+.Hitpointsbox {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.strengthbox {
+  display: flex;
+  flex-direction: row;
+}
+
+.strengthnumbers {
+  display: flex;
+  flex-direction: column;
+  border: solid black;
+  width: 10vw;
+}
+
+.middle-body {
+  display: flex;
+}
+
+.arm-init-spd-box {
+  display: flex;
+}
+
+.armorbox {
+  display: flex;
+  flex-direction: column;
+}
+
+textarea {
+  resize: none;
+}
+
+.deathcheckboxes {
+  display: flex;
+}
+
+.coinsbox {
+  display: flex;
+}
+
+.equipmentbox {
+  display: flex;
+}
+
+.equipment-textarea {
+  resize: none;
+  height: 45vh;
+  width: 30vw;
+}
+
+.coinsboxbody {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.left-middle-body{
+  display: flex;
+}
+.savingthrowline{
+  display: flex;
+  align-items: center;
+}
+.saving-throw-number{
+  width: 4vw ;
+  height: 4vh;
+}
+.coinsinput{
+  width: 8vw;
+  display: flex;
+  
+}
+.inspiration-box{
+  display: flex;
+}
+.inspiration-input{
+  width: 3vw;
+  height: 4vh;
+}
+.features-textarea{
+  height: 60vh;
+  width: 15vw;
+}
+.personality-textarea{
+  height: 10vh;
+  width: 15vw;
+}
+.spell-slots-box{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
