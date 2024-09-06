@@ -307,6 +307,7 @@ function App() {
                 <input type='number' placeholder='0' className='coinsinput'></input>
               </div>
             </div>
+            
             <div>
               <textarea className='equipment-textarea' placeholder='Set of common clothes'></textarea>
               <p>EQUIPMENT</p>
