@@ -1,8 +1,13 @@
 
+import { useState } from 'react';
 import './App.css';
-import spellslotfunction from './adventurersheet-script';
+// import spellslotfunction from './adventurersheet-script';
 
 function App() {
+  const [checkbox,setcheckbox] = useState(false);
+
+  const [checkboxCount, setCheckboxCount] = useState(1);
+
   return (
     <div className="App">
       <div className='upper-body-box'>
@@ -314,9 +319,16 @@ function App() {
             </div>
           </div>
           <div className='spell-slots-box'>
-            <div >
-              <input type='checkbox'></input>
-              <button onClick={spellslotfunction} id='spellslot1lvl'>+</button>
+            <div id='spellslots-1lvl-container'>
+              {Array(checkboxCount) // [0]
+                .fill(0)
+                .map((x, i) => {
+                  return (
+                      <input type='checkbox' value={checkbox} onChange={e => setcheckbox(e.target.checked)}></input>
+                  );
+                })
+              }
+              <button id='spellslot1lvl' onClick={e => checkboxCount < 4 && setCheckboxCount(checkboxCount + 1)}>+</button>
             </div>
             <div>
               <input type='checkbox'></input>
