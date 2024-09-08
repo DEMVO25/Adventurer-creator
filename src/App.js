@@ -4,9 +4,12 @@ import './App.css';
 // import spellslotfunction from './adventurersheet-script';
 
 function App() {
-  const [checkbox,setcheckbox] = useState(false);
+  const [checkbox, setcheckbox] = useState(false);
 
   const [checkboxCount, setCheckboxCount] = useState(1);
+
+  const [checkbox1, setcheckbox1] = useState(false);
+  const [checkboxCount1, setCheckboxCount1] = useState(1);
 
   return (
     <div className="App">
@@ -312,7 +315,7 @@ function App() {
                 <input type='number' placeholder='0' className='coinsinput'></input>
               </div>
             </div>
-            
+
             <div>
               <textarea className='equipment-textarea' placeholder='Set of common clothes'></textarea>
               <p>EQUIPMENT</p>
@@ -324,15 +327,22 @@ function App() {
                 .fill(0)
                 .map((x, i) => {
                   return (
-                      <input type='checkbox' value={checkbox} onChange={e => setcheckbox(e.target.checked)}></input>
+                    <input type='checkbox' value={checkbox} onChange={e => setcheckbox(e.target.checked)}></input>
                   );
                 })
               }
               <button id='spellslot1lvl' onClick={e => checkboxCount < 4 && setCheckboxCount(checkboxCount + 1)}>+</button>
             </div>
             <div>
-              <input type='checkbox'></input>
-              <button>+</button>
+              {Array(checkboxCount1)
+                .fill(0)
+                .map((x, i) => {
+                  return (
+                    <input type='checkbox' value={checkbox1} onChange={(e) => setcheckbox1(e.target.checked)}></input>
+                  );
+                })
+              }
+              <button id='spellslot1lvl' onClick={() => checkboxCount1 < 3 && setCheckboxCount1(checkboxCount1 + 1)}>+</button>
             </div>
             <div>
               <input type='checkbox'></input>
