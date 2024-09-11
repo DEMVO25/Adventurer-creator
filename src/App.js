@@ -5,11 +5,31 @@ import './App.css';
 
 function App() {
   const [checkbox, setcheckbox] = useState(false);
-
-  const [checkboxCount, setCheckboxCount] = useState(1);
+  const [checkboxCount, setCheckboxCount] = useState(0);
 
   const [checkbox1, setcheckbox1] = useState(false);
-  const [checkboxCount1, setCheckboxCount1] = useState(1);
+  const [checkboxCount1, setCheckboxCount1] = useState(0);
+
+  const [checkbox2, setcheckbox2] = useState(false);
+  const [checkboxCount2, setCheckboxCount2] = useState(0);
+
+  const [checkbox3, setcheckbox3] = useState(false);
+  const [checkboxCount3, setCheckboxCount3] = useState(0);
+
+  const [checkbox4, setcheckbox4] = useState(false);
+  const [checkboxCount4, setCheckboxCount4] = useState(0);
+
+  const [checkbox5, setcheckbox5] = useState(false);
+  const [checkboxCount5, setCheckboxCount5] = useState(0);
+
+  const [checkbox6, setcheckbox6] = useState(false);
+  const [checkboxCount6, setCheckboxCount6] = useState(0);
+
+  const [checkbox7, setcheckbox7] = useState(false);
+  const [checkboxCount7, setCheckboxCount7] = useState(0);
+
+  const [checkbox8, setcheckbox8] = useState(false);
+  const [checkboxCount8, setCheckboxCount8] = useState(0);
 
   return (
     <div className="App">
@@ -342,34 +362,84 @@ function App() {
                   );
                 })
               }
-              <button id='spellslot1lvl' onClick={() => checkboxCount1 < 3 && setCheckboxCount1(checkboxCount1 + 1)}>+</button>
+              <button id='spellslot2lvl' onClick={() => checkboxCount1 < 3 && setCheckboxCount1(checkboxCount1 + 1)}>+</button>
             </div>
             <div>
-              <input type='checkbox'></input>
-              <button>+</button>
+              {Array(checkboxCount2)
+                .fill(0)
+                .map((x, i) => {
+                  return (
+                    <input type='checkbox' value={checkbox2} onChange={(e) => setcheckbox2(e.target.checked)}></input>
+                  );
+                })
+              }
+              <button id='spellslot3lvl' onClick={e => checkboxCount2 < 3 && setCheckboxCount2(checkboxCount2 + 1)}>+</button>
             </div>
             <div>
-              <input type='checkbox'></input>
-              <button>+</button>
+              {Array(checkboxCount3)
+                .fill(0)
+                .map((x, i) => {
+                  return (
+                    <input type='checkbox' value={checkbox3} onChange={(e) => setcheckbox3(e.target.checked)}></input>
+                  );
+                })
+              }
+              <button id='spellslot4lvl' onClick={e => checkboxCount3 < 3 && setCheckboxCount3(checkboxCount3 + 1)}>+</button>
             </div>
             <div>
-              <input type='checkbox'></input>
-              <button>+</button>
+            {Array(checkboxCount4)
+                .fill(0)
+                .map((x, i) => {
+                  return (
+                    <input type='checkbox' value={checkbox4} onChange={(e) => setcheckbox4(e.target.checked)}></input>
+                  );
+                })
+              }
+              <button id='spellslot5lvl' onClick={e => checkboxCount4 < 3 && setCheckboxCount4(checkboxCount4 + 1)}>+</button>
             </div>
             <div>
-              <input type='checkbox'></input>
-              <button>+</button>
+            {Array(checkboxCount5)
+                .fill(0)
+                .map((x, i) => {
+                  return (
+                    <input type='checkbox' value={checkbox5} onChange={(e) => setcheckbox5(e.target.checked)}></input>
+                  );
+                })
+              }
+              <button id='spellslot6lvl' onClick={e => checkboxCount5 < 2 && setCheckboxCount5(checkboxCount5 + 1)}>+</button>
             </div>
             <div>
-              <input type='checkbox'></input>
-              <button>+</button>
+            {Array(checkboxCount6)
+                .fill(0)
+                .map((x, i) => {
+                  return (
+                    <input type='checkbox' value={checkbox6} onChange={(e) => setcheckbox6(e.target.checked)}></input>
+                  );
+                })
+              }
+              <button id='spellslot7lvl' onClick={e => checkboxCount6 < 2 && setCheckboxCount6(checkboxCount6 + 1)}>+</button>
             </div>
             <div>
-              <input type='checkbox'></input>
-              <button>+</button>
+            {Array(checkboxCount7)
+                .fill(0)
+                .map((x, i) => {
+                  return (
+                    <input type='checkbox' value={checkbox7} onChange={(e) => setcheckbox7(e.target.checked)}></input>
+                  );
+                })
+              }
+              <button id='spellslot8lvl' onClick={e => checkboxCount7 < 1 && setCheckboxCount7(checkboxCount7 + 1)}>+</button>
             </div>
             <div>
-              <input type='checkbox'></input>
+            {Array(checkboxCount8)
+                .fill(0)
+                .map((x, i) => {
+                  return (
+                    <input type='checkbox' value={checkbox8} onChange={(e) => setcheckbox8(e.target.checked)}></input>
+                  );
+                })
+              }
+              <button id='spellslot9lvl' onClick={e => checkboxCount8 < 1 && setCheckboxCount8(checkboxCount8 + 1)}>+</button>
             </div>
             <p>SPELL SLOTS</p>
           </div>
