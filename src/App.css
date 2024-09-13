@@ -134,3 +134,16 @@ textarea {
   flex-direction: column;
   align-items: flex-start;
 }
+.passive-wisdom-box{
+  display: flex;
+}
+
+.passive-wisdom-input{
+  width: 20%;
+  
+}
+
+.proficiencies-textarea{
+  width: 110%;
+  height: 30vh;
+}

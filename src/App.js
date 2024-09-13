@@ -41,7 +41,7 @@ function App() {
           <p>
             Class & lvl's
           </p>
-          <input type='text' placeholder='Warlock 1 / Fighter 1' max={40}></input>
+          <input type='text' placeholder=' Fighter 1 /Warlock 1' max={40}></input>
           <p>
             Background
           </p>
@@ -142,6 +142,7 @@ function App() {
               </div>
               <p>SAVING THROWS</p>
             </div>
+
             <div>
               <div className='savingthrowline'>
                 <input type='checkbox'></input>
@@ -234,6 +235,17 @@ function App() {
                 <p>Survival (Wis)</p>
               </div>
               <p>SKILLS</p>
+            </div>
+            <div className='passive-wisdom-box'>
+              <input type='number' max={20} className='passive-wisdom-input'></input>
+              <p>PASSIVE WISDOM (PERCEPTION)</p>
+
+            </div>
+            <div>
+              <textarea className='proficiencies-textarea' placeholder='Armor: All armor, shields.
+Weapons: Simple weapons, martial weapons.
+Tools: None.'></textarea>
+              <p>OTHER PROFICIENCIES & LANGUAGES</p>
             </div>
           </div>
         </div>
@@ -387,7 +399,7 @@ function App() {
               <button id='spellslot4lvl' onClick={e => checkboxCount3 < 3 && setCheckboxCount3(checkboxCount3 + 1)}>+</button>
             </div>
             <div>
-            {Array(checkboxCount4)
+              {Array(checkboxCount4)
                 .fill(0)
                 .map((x, i) => {
                   return (
@@ -398,7 +410,7 @@ function App() {
               <button id='spellslot5lvl' onClick={e => checkboxCount4 < 3 && setCheckboxCount4(checkboxCount4 + 1)}>+</button>
             </div>
             <div>
-            {Array(checkboxCount5)
+              {Array(checkboxCount5)
                 .fill(0)
                 .map((x, i) => {
                   return (
@@ -409,7 +421,7 @@ function App() {
               <button id='spellslot6lvl' onClick={e => checkboxCount5 < 2 && setCheckboxCount5(checkboxCount5 + 1)}>+</button>
             </div>
             <div>
-            {Array(checkboxCount6)
+              {Array(checkboxCount6)
                 .fill(0)
                 .map((x, i) => {
                   return (
@@ -420,7 +432,7 @@ function App() {
               <button id='spellslot7lvl' onClick={e => checkboxCount6 < 2 && setCheckboxCount6(checkboxCount6 + 1)}>+</button>
             </div>
             <div>
-            {Array(checkboxCount7)
+              {Array(checkboxCount7)
                 .fill(0)
                 .map((x, i) => {
                   return (
@@ -431,7 +443,7 @@ function App() {
               <button id='spellslot8lvl' onClick={e => checkboxCount7 < 1 && setCheckboxCount7(checkboxCount7 + 1)}>+</button>
             </div>
             <div>
-            {Array(checkboxCount8)
+              {Array(checkboxCount8)
                 .fill(0)
                 .map((x, i) => {
                   return (
