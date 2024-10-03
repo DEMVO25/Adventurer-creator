@@ -14,7 +14,7 @@ function Login() {
             .then(response => response.json())
             .then(data => {
                 if (data.authenticated) {
-                    window.location.href = '/sheet';
+                    window.location.href = '/menu';
                 } else {
                     alert('Invalid username or password');
                 }
