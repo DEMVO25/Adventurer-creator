@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-function Login() {
+function Login({setUsername}) {
+    const navigate = useNavigate();
     const loginhandle = (event) => {
         event.preventDefault();
         const usernamelogin = document.getElementById("usernamelogin").value;
@@ -14,7 +15,8 @@ function Login() {
             .then(response => response.json())
             .then(data => {
                 if (data.authenticated) {
-                    window.location.href = '/menu';
+                    setUsername(usernamelogin);
+                   navigate('/menu');
                 } else {
                     alert('Invalid username or password');
                 }
