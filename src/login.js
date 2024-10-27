@@ -1,7 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 
-function Login({setUsername}) {
+function Login({ setUsername }) {
     const navigate = useNavigate();
+
     const loginhandle = (event) => {
         event.preventDefault();
         const usernamelogin = document.getElementById("usernamelogin").value;
@@ -10,13 +11,13 @@ function Login({setUsername}) {
         fetch('/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: usernamelogin, password: passwordlogin }),
+            body: JSON.stringify({ username: usernamelogin, password: passwordlogin }), // Send plain password
         })
             .then(response => response.json())
             .then(data => {
                 if (data.authenticated) {
                     setUsername(usernamelogin);
-                   navigate('/menu');
+                    navigate('/menu');
                 } else {
                     alert('Invalid username or password');
                 }
@@ -29,15 +30,15 @@ function Login({setUsername}) {
             <h1>Login page</h1>
             <form onSubmit={loginhandle}>
                 <div>
-                    <input placeholder="Username" id="usernamelogin"></input>
+                    <input placeholder="Username" id="usernamelogin" />
                 </div>
                 <div>
-                    <input placeholder="Password" id="passwordlogin"></input>
+                    <input placeholder="Password" id="passwordlogin" type="password" />
                 </div>
                 <div>
                     <button type="submit">Login</button>
                     <Link to="/register">
-                        <button>Register</button>
+                        <button type="button">Register</button>
                     </Link>
                 </div>
             </form>
