@@ -6,6 +6,27 @@ function Menu({ username }) {
   const [buttons, setButtons] = React.useState([]);
   const [text, setText] = React.useState('');
 
+  React.useEffect(() => {
+    // Fetch existing characters when the component mounts
+    const fetchCharacters = async () => {
+      try {
+        const response = await fetch(`/menu/${username}`);
+        const data = await response.json();
+        if (response.ok) {
+          const existingButtons = data.map((character) => ({ text: character.name }));
+          setButtons(existingButtons); // Set the existing buttons
+        } else {
+          alert(data.message); // Handle error
+        }
+      } catch (error) {
+        console.error('Error fetching characters:', error);
+        alert('An error occurred while fetching characters.');
+      }
+    };
+
+    fetchCharacters();
+  }, [username]); // Dependency array ensures this runs when username changes
+
   const handleClick = async () => {
     const existingButton = buttons.find((button) => button.text === text);
     if (existingButton) {
@@ -18,7 +39,7 @@ function Menu({ username }) {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ buttonname: text, username: username}),
+          body: JSON.stringify({ buttonname: text, username: username }),
         });
 
         const data = await response.json();
@@ -38,8 +59,9 @@ function Menu({ username }) {
     }
   };
 
-  const handleClick1 = () => {
-    navigate('/sheet');
+  const handleClick1 = (buttonText) => {
+    // Navigate to the character sheet for the selected character
+    navigate('/sheet', { state: { characterName: buttonText } });
   };
 
   const handleTextChange = (e) => {
@@ -54,7 +76,7 @@ function Menu({ username }) {
         <input type="text" value={text} onChange={handleTextChange} />
         <button onClick={handleClick}>Create Character</button>
         {buttons.map((button, index) => (
-          <button onClick={handleClick1} key={index}>{button.text}</button>
+          <button onClick={() => handleClick1(button.text)} key={index}>{button.text}</button>
         ))}
       </div>
     </div>

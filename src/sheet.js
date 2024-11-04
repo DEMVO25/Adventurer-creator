@@ -1,9 +1,13 @@
 
 import { useState } from 'react';
 import './App.css';
-// import spellslotfunction from './adventurersheet-script';
+import { useLocation } from 'react-router-dom';
+
+
+
 
 function Sheet() {
+  const location = useLocation();
   const [checkbox, setcheckbox] = useState(false);
   const [checkboxCount, setCheckboxCount] = useState(0);
 
@@ -31,17 +35,26 @@ function Sheet() {
   const [checkbox8, setcheckbox8] = useState(false);
   const [checkboxCount8, setCheckboxCount8] = useState(0);
 
+  function submithandler() {
+    const classlevel = document.getElementById("class%lvl").value;
+    fetch('/sheet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ classlevel: classlevel, name: location.state.characterName }),
+    })
+  }
+
+
   return (
     <div className="App">
       <div className='upper-body-box'>
         <div className='Upper-body'>
           <p>Adventurer name</p>
-          <input type='text' placeholder='Adventurer name'>
-          </input>
+          {location.state.characterName}
           <p>
             Class & lvl's
           </p>
-          <input type='text' placeholder=' Fighter 1 /Warlock 1' max={40}></input>
+          <input type='text' placeholder=' Fighter 1 /Warlock 1' id='class%lvl' max={40}></input>
           <p>
             Background
           </p>
@@ -61,6 +74,9 @@ function Sheet() {
             Experience
           </p>
           <input type='number' placeholder='0' min={0} max={355000}></input>
+        </div>
+        <div>
+          <button onClick={submithandler}>Save</button>
         </div>
       </div>
 
