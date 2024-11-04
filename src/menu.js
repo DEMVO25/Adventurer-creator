@@ -1,27 +1,45 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
-
 function Menu({ username }) {
   const navigate = useNavigate();
-
   const [buttons, setButtons] = React.useState([]);
   const [text, setText] = React.useState('');
 
-  const handleClick = () => {
+  const handleClick = async () => {
     const existingButton = buttons.find((button) => button.text === text);
     if (existingButton) {
       alert(`Button with name "${text}" already exists!`);
     } else {
-      setButtons([...buttons, { text }]);
-      setText('');
+      // Send the button text to the server to create a character
+      try {
+        const response = await fetch('/menu', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ buttonname: text, username: username}),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // If character creation is successful, update the state
+          setButtons([...buttons, { text }]);
+          setText('');
+          alert(data.message); // Show success message
+        } else {
+          alert(data.message); // Show error message
+        }
+      } catch (error) {
+        console.error('Error creating character:', error);
+        alert('An error occurred while creating the character.');
+      }
     }
   };
 
   const handleClick1 = () => {
-    navigate('/sheet')
+    navigate('/sheet');
   };
 
   const handleTextChange = (e) => {
