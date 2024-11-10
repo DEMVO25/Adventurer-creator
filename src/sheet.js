@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import { useLocation } from 'react-router-dom';
 
@@ -35,15 +35,38 @@ function Sheet() {
   const [checkbox8, setcheckbox8] = useState(false);
   const [checkboxCount8, setCheckboxCount8] = useState(0);
 
+  const name = location.state.characterName;
+
+  const [character, setcharacter] = useState({});
+
+  useEffect(() => {
+    const fetchCharacter = async () => {
+      try {
+        const response = await fetch(`/sheet/${name}`);
+        const data = await response.json();
+        if (response.ok) {
+          setcharacter(data)
+        } else {
+          alert(data.message); // Handle error
+        }
+      } catch (error) {
+        console.error('Error fetching characters:', error);
+        alert('An error occurred while fetching characters.');
+      }
+    };
+    fetchCharacter()
+  }, []);
+
   function submithandler() {
     const classlevel = document.getElementById("class%lvl").value;
+    const background = document.getElementById("background").value;
     fetch('/sheet', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ classlevel: classlevel, name: location.state.characterName }),
+      body: JSON.stringify({ classlevel, name, background }),
     })
   }
-
+ 
 
   return (
     <div className="App">
@@ -54,11 +77,11 @@ function Sheet() {
           <p>
             Class & lvl's
           </p>
-          <input type='text' placeholder=' Fighter 1 /Warlock 1' id='class%lvl' max={40}></input>
+          <input type='text' placeholder=' Fighter 1 /Warlock 1' id='class%lvl' value={character.classlevel}  onChange={e=>setcharacter({...character,classlevel:e.target.value})} max={40}></input>
           <p>
             Background
           </p>
-          <input type='text' placeholder='Urchin' max={40}></input>
+          <input type='text' placeholder='Urchin' id='background' value={character.background} onChange={e=>setcharacter({...character,background:e.target.value})} max={40}></input>
 
         </div>
         <div className='Upper-body-lower'>
