@@ -60,10 +60,32 @@ function Sheet() {
   function submithandler() {
     const classlevel = document.getElementById("class%lvl").value;
     const background = document.getElementById("background").value;
+    const race = document.getElementById("race").value;
+    const alignment = document.getElementById("alignment").value;
+    const experience = document.getElementById("experience").value;
+    const strengthmod = document.getElementById("strengthmod").value;
+    const strengthnumber = document.getElementById("strengthnumber").value;
+    const dexteritymod = document.getElementById("dexteritymod").value;
+    const dexteritynumber = document.getElementById("dexteritynumber").value;
+    const constitutionmod = document.getElementById("constitutionmod").value;
+    const constitutionnumber = document.getElementById("constitutionnumber").value;
+    const intelligencemod = document.getElementById("intelligencemod").value;
+    const intelligencenumber = document.getElementById("intelligencenumber").value;
+    const wisdommod = document.getElementById("wisdommod").value;
+    const wisdomnumber = document.getElementById("wisdomnumber").value;
+    const charismamod = document.getElementById("charismamod").value;
+    const charismanumber = document.getElementById("charismanumber").value;
+    const inspiration = document.getElementById("inspiration").value;
+    const proficiencybonus = document.getElementById("proficiencybonus").value;
+    const strengthsavingthrow = document.getElementById("strengthsavingthrow").value;
+    const dexteritysavingthrow = document.getElementById("dexteritysavingthrow").value;
+    const constitutionsavingthrow = document.getElementById("constitutionsavingthrow").value;
+    const intelligencesavingthrow = document.getElementById("intelligencesavingthrow").value;
+    const acrobaticscheck = document.getElementById("acrobaticscheck").value;
     fetch('/sheet', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ classlevel, name, background }),
+      body: JSON.stringify({ classlevel, name, background, race, alignment, experience, strengthmod, strengthnumber, dexteritymod, dexteritynumber, constitutionmod, constitutionnumber, intelligencemod, intelligencenumber, wisdommod, wisdomnumber, charismamod, charismanumber, inspiration, proficiencybonus, strengthsavingthrow, dexteritysavingthrow, constitutionsavingthrow, intelligencesavingthrow, acrobaticscheck }),
     })
   }
  
@@ -88,15 +110,15 @@ function Sheet() {
           <p>
             Race
           </p>
-          <input type='text' placeholder='Human' max={40}></input>
+          <input type='text' placeholder='Human' id='race' value={character.race} onChange={e=>setcharacter({...character,race:e.target.value})} max={40}></input>
           <p>
             Alignment
           </p>
-          <input type='text' placeholder='Neutral Good' max={40}></input>
+          <input type='text' placeholder='Neutral Good' id='alignment' value={character.alignment} onChange={e=>setcharacter({...character,alignment:e.target.value})} max={40}></input>
           <p>
             Experience
           </p>
-          <input type='number' placeholder='0' min={0} max={355000}></input>
+          <input type='number' id='experience' value={character.experience} placeholder='0' onChange={e=>setcharacter({...character,experience:e.target.value})} min={0} max={355000}></input>
         </div>
         <div>
           <button onClick={submithandler}>Save</button>
@@ -108,75 +130,75 @@ function Sheet() {
           <div className='statscolumn'>
             <div className='strengthbox'>
               <div className='strengthnumbers'>
-                <input type='number' placeholder='+2' max={+7} min={-1} ></input>
-                <input type='number' placeholder='15' max={24} min={1}></input>
+                <input type='number' placeholder='+2' max={+7} min={-1} id='strengthmod' value={character.strengthmod} onChange={e=>setcharacter({...character,strengthmod:e.target.value})} ></input>
+                <input type='number' placeholder='15' max={24} min={1} id='strengthnumber' value={character.strengthnumber} onChange={e=>setcharacter({...character,strengthnumber:e.target.value})}></input>
                 <p> Strength</p>
               </div>
             </div>
             <div className='strengthnumbers'>
-              <input type='number' placeholder='+0' max={+5} min={-1} ></input>
-              <input type='number' placeholder='10' max={20} min={1}></input>
+              <input type='number' placeholder='+0' id='dexteritymod' value={character.dexteritymod} onChange={e=>setcharacter({...character,dexteritymod:e.target.value})} max={+5} min={-1} ></input>
+              <input type='number' placeholder='10' id='dexteritynumber' value={character.dexteritynumber} onChange={e=>setcharacter({...character,dexteritynumber:e.target.value})} max={20} min={1}></input>
               <p> Dexterity</p>
             </div>
             <div className='strengthnumbers'>
-              <input type='number' placeholder='+3' max={+5} min={-1} ></input>
-              <input type='number' placeholder='16' max={20} min={1}></input>
+              <input type='number' placeholder='+3' id='constitutionmod' value={character.constitutionmod} onChange={e=>setcharacter({...character,constitutionmod:e.target.value})} max={+5} min={-1} ></input>
+              <input type='number' placeholder='16' id='constitutionnumber' value={character.constitutionnumber} onChange={e=>setcharacter({...character,constitutionnumber:e.target.value})} max={20} min={1}></input>
               <p> Constitution</p>
             </div>
             <div className='strengthnumbers'>
-              <input type='number' placeholder='+1' max={+5} min={-1} ></input>
-              <input type='number' placeholder='12' max={20} min={1}></input>
+              <input type='number' placeholder='+1' id='intelligencemod' value={character.intelligencemod} onChange={e=>setcharacter({...character,intelligencemod:e.target.value})} max={+5} min={-1} ></input>
+              <input type='number' placeholder='12'id='intelligencenumber' value={character.intelligencenumber} onChange={e=>setcharacter({...character,intelligencenumber:e.target.value})} max={20} min={1}></input>
               <p> Intelligence</p>
             </div>
             <div className='strengthnumbers'>
-              <input type='number' placeholder='+2' max={+5} min={-1} ></input>
-              <input type='number' placeholder='14' max={20} min={1}></input>
+              <input type='number' placeholder='+2' id='wisdommod' value={character.wisdommod} onChange={e=>setcharacter({...character,wisdommod:e.target.value})} max={+5} min={-1} ></input>
+              <input type='number' placeholder='14' id='wisdomnumber' value={character.wisdomnumber} onChange={e=>setcharacter({...character,wisdomnumber:e.target.value})} max={20} min={1}></input>
               <p> Wisdom</p>
             </div>
             <div className='strengthnumbers'>
-              <input type='number' placeholder='-1' max={+5} min={-1} ></input>
-              <input type='number' placeholder='8' max={20} min={1}></input>
+              <input type='number' placeholder='-1' id='charismamod' value={character.charismamod} onChange={e=>setcharacter({...character,charismamod:e.target.value})} max={+5} min={-1} ></input>
+              <input type='number' placeholder='8' id='charismanumber' value={character.charismanumber} onChange={e=>setcharacter({...character,charismanumber:e.target.value})} max={20} min={1}></input>
               <p> Charisma</p>
             </div>
           </div>
           <div>
             <div>
               <div className='inspiration-box'>
-                <input type='number' placeholder='0' className='inspiration-input'></input>
+                <input type='number' placeholder='0' id='inspiration' value={character.inspiration} onChange={e=>setcharacter({...character,inspiration:e.target.value})} className='inspiration-input'></input>
                 <p>INSPIRATION</p>
               </div>
               <div className='inspiration-box'>
-                <input type='text' placeholder='+2' className='inspiration-input' ></input>
+                <input type='text' placeholder='+2' id='proficiencybonus' value={character.proficiencybonus} onChange={e=>setcharacter({...character,proficiencybonus:e.target.value})} className='inspiration-input' ></input>
                 <p>PROFICIENCY BONUS</p>
               </div>
               <div className='savingthrowline'>
                 <input type='checkbox' defaultChecked></input>
-                <input type='text' className='saving-throw-number' placeholder='+4'></input>
+                <input type='text' className='saving-throw-number' id='strengthsavingthrow' value={character.strengthsavingthrow} onChange={e=>setcharacter({...character,strengthsavingthrow:e.target.value})} placeholder='+4'></input>
                 <p>Strength</p>
               </div>
               <div className='savingthrowline'>
                 <input type='checkbox'></input>
-                <input type='text' className='saving-throw-number' placeholder='+0'></input>
+                <input type='text' className='saving-throw-number' id='dexteritysavingthrow' value={character.dexteritysavingthrow} onChange={e=>setcharacter({...character,dexteritysavingthrow:e.target.value})} placeholder='+0'></input>
                 <p>Dexterity</p>
               </div>
               <div className='savingthrowline'>
                 <input type='checkbox' defaultChecked ></input>
-                <input type='text' className='saving-throw-number' placeholder='+5'></input>
+                <input type='text' className='saving-throw-number' id='constitutionsavingthrow' value={character.constitutionsavingthrow} onChange={e=>setcharacter({...character,constitutionsavingthrow:e.target.value})} placeholder='+5'></input>
                 <p>Constitution</p>
               </div>
               <div className='savingthrowline'>
                 <input type='checkbox'></input>
-                <input type='text' className='saving-throw-number' placeholder='+1'></input>
+                <input type='text' className='saving-throw-number' id='intelligencesavingthrow' value={character.intelligencesavingthrow} onChange={e=>setcharacter({...character,intelligencesavingthrow:e.target.value})} placeholder='+1'></input>
                 <p>Intelligence</p>
               </div>
               <div className='savingthrowline'>
                 <input type='checkbox'></input>
-                <input type='text' className='saving-throw-number' placeholder='+2'></input>
+                <input type='text' className='saving-throw-number' id='wisdomsavingthrow' value={character.wisdomsavingthrow} onChange={e=>setcharacter({...character,wisdomsavingthrow:e.target.value})} placeholder='+2'></input>
                 <p>Wisdom</p>
               </div>
               <div className='savingthrowline'>
                 <input type='checkbox'></input>
-                <input type='text' className='saving-throw-number' placeholder='-1'></input>
+                <input type='text' className='saving-throw-number' id='charismasavingthrow' value={character.charismasavingthrow} onChange={e=>setcharacter({...character,charismasavingthrow:e.target.value})} placeholder='-1'></input>
                 <p>Charisma</p>
               </div>
               <p>SAVING THROWS</p>
@@ -184,8 +206,8 @@ function Sheet() {
 
             <div>
               <div className='savingthrowline'>
-                <input type='checkbox'></input>
-                <input type='text' className='saving-throw-number' placeholder='-1'></input>
+                <input type='checkbox' id='acrobaticscheck' value={character.acrobaticscheck} onChange={e=>setcharacter({...character,acrobaticscheck:e.target.value})} ></input>
+                <input type='text' className='saving-throw-number' id='acrobatics' placeholder='-1'></input>
                 <p>Acrobatics (Dex)</p>
               </div>
               <div className='savingthrowline'>
