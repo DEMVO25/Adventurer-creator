@@ -206,8 +206,8 @@ function Sheet() {
 
             <div>
               <div className='savingthrowline'>
-                <input type='checkbox'  ></input>
-                <input type='text' className='saving-throw-number' id='acrobaticscheck' value={character.acrobaticscheck} onChange={e=>setcharacter({...character,acrobaticscheck:e.target.value})}  placeholder='-1'></input>
+                <input type='checkbox' id='acrobaticscheck' checked={character.acrobaticscheck} onChange={e=>setcharacter({...character,acrobaticscheck:e.target.checked})} ></input>
+                <input type='text' className='saving-throw-number'  placeholder='-1'></input>
                 <p>Acrobatics (Dex)</p>
               </div>
               <div className='savingthrowline'>
