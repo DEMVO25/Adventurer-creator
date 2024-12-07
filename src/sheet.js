@@ -207,92 +207,92 @@ function Sheet() {
             <div>
               <div className='savingthrowline'>
                 <input type='checkbox' id='acrobaticscheck' checked={character.acrobaticscheck} onChange={e=>setcharacter({...character,acrobaticscheck:e.target.checked})} ></input>
-                <input type='text' className='saving-throw-number'  placeholder='-1'></input>
+                <input type='text' className='saving-throw-number' id='acrobatics' placeholder='-1'></input>
                 <p>Acrobatics (Dex)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox'></input>
-                <input type='text' className='saving-throw-number' placeholder='+2'></input>
+                <input type='checkbox' id='animalhandlingcheck' ></input>
+                <input type='text' className='saving-throw-number' id='animalhandling' placeholder='+2'></input>
                 <p>Animal Handling (Wis)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox'></input>
-                <input type='text' className='saving-throw-number' placeholder='+1'></input>
+                <input type='checkbox' id='arcanacheck'></input>
+                <input type='text' className='saving-throw-number' id='arcana' placeholder='+1'></input>
                 <p>Arcana (Int)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox'></input>
-                <input type='text' className='saving-throw-number' placeholder='+2'></input>
+                <input type='checkbox' id='athleticscheck'></input>
+                <input type='text' className='saving-throw-number' id='athletics' placeholder='+2'></input>
                 <p>Athletics (Str)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox'></input>
-                <input type='text' className='saving-throw-number' placeholder='-1'></input>
+                <input type='checkbox' id='deceptioncheck'></input>
+                <input type='text' className='saving-throw-number' id='deception' placeholder='-1'></input>
                 <p>Deception (Cha)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox'></input>
-                <input type='text' className='saving-throw-number' placeholder='+1'></input>
+                <input type='checkbox' id='historycheck'></input>
+                <input type='text' className='saving-throw-number' id='history' placeholder='+1'></input>
                 <p>History (Int)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox'></input>
-                <input type='text' className='saving-throw-number' placeholder='+2'></input>
+                <input type='checkbox' id='insightcheck'></input>
+                <input type='text' className='saving-throw-number' id='insight' placeholder='+2'></input>
                 <p>Insight (Wis)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox'></input>
-                <input type='text' className='saving-throw-number' placeholder='-1'></input>
+                <input type='checkbox' id='intimidationcheck'></input>
+                <input type='text' className='saving-throw-number' id='intimidation' placeholder='-1'></input>
                 <p>Intimidation (Cha)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox'></input>
-                <input type='text' className='saving-throw-number' placeholder='+1'></input>
+                <input type='checkbox' id='investigationcheck'></input>
+                <input type='text' className='saving-throw-number' id='investigation' placeholder='+1'></input>
                 <p>Investigation (Int)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox'></input>
-                <input type='text' className='saving-throw-number' placeholder='+2'></input>
+                <input type='checkbox' id='medicinecheck'></input>
+                <input type='text' className='saving-throw-number' id='medicine' placeholder='+2'></input>
                 <p>Medicine (Wis)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox'></input>
-                <input type='text' className='saving-throw-number' placeholder='+1'></input>
+                <input type='checkbox' id='naturecheck'></input>
+                <input type='text' className='saving-throw-number' id='nature' placeholder='+1'></input>
                 <p>Nature (Int)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox'></input>
-                <input type='text' className='saving-throw-number' placeholder='+2'></input>
+                <input type='checkbox' id='perceptioncheck'></input>
+                <input type='text' className='saving-throw-number' id='perception' placeholder='+2'></input>
                 <p>Perception (Wis)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox'></input>
-                <input type='text' className='saving-throw-number' placeholder='-1'></input>
+                <input type='checkbox' id='perfomancecheck'></input>
+                <input type='text' className='saving-throw-number' id='perfomance' placeholder='-1'></input>
                 <p>Performance (Cha)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox'></input>
-                <input type='text' className='saving-throw-number' placeholder='-1'></input>
+                <input type='checkbox' id='persuasioncheck'></input>
+                <input type='text' className='saving-throw-number' id='persuasion' placeholder='-1'></input>
                 <p>Persuasion (Cha)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox'></input>
-                <input type='text' className='saving-throw-number' placeholder='+1'></input>
+                <input type='checkbox' id='religioncheck'></input>
+                <input type='text' className='saving-throw-number' id='religion' placeholder='+1'></input>
                 <p>Religion (Int)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox' defaultChecked></input>
-                <input type='text' className='saving-throw-number' placeholder='+2'></input>
+                <input type='checkbox' id='sleightofhandscheck' defaultChecked></input>
+                <input type='text' className='saving-throw-number' id='sleightofhands' placeholder='+2'></input>
                 <p>Sleight of Hand (Dex)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox' defaultChecked></input>
-                <input type='text' className='saving-throw-number' placeholder='+2'></input>
+                <input type='checkbox' id='stealthcheck' defaultChecked></input>
+                <input type='text' className='saving-throw-number' id='stealth' placeholder='+2'></input>
                 <p>Stealth (Dex)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox'></input>
-                <input type='text' className='saving-throw-number' placeholder='+2'></input>
+                <input type='checkbox' id='survivalcheck'></input>
+                <input type='text' className='saving-throw-number' id='survival' placeholder='+2'></input>
                 <p>Survival (Wis)</p>
               </div>
               <p>SKILLS</p>
