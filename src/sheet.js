@@ -82,10 +82,35 @@ function Sheet() {
     const constitutionsavingthrow = document.getElementById("constitutionsavingthrow").value;
     const intelligencesavingthrow = document.getElementById("intelligencesavingthrow").value;
     const acrobaticscheck = document.getElementById("acrobaticscheck").value;
+    const acrobatics = document.getElementById("acrobatics").value;
+    const animalhandlingcheck = document.getElementById("animalhandlingcheck").value;
+    const animalhandling = document.getElementById("animalhandling").value;
+    const arcanacheck = document.getElementById("arcanacheck").value;
+    const arcana = document.getElementById("arcana").value;
+    const athleticscheck = document.getElementById("athleticscheck").value;
+    const athletics = document.getElementById("athletics").value;
+    const deceptioncheck = document.getElementById("deceptioncheck").value;
+    const deception = document.getElementById("deception").value;
+    const historycheck = document.getElementById("historycheck").value;
+    const history = document.getElementById("history").value;
+    const insightcheck = document.getElementById("insightcheck").value;
+    const insight = document.getElementById("insight").value;
+    const intimidationcheck = document.getElementById("intimidationcheck").value;
+    const intimidation = document.getElementById("intimidation").value;
+    const investigationcheck = document.getElementById("investigationcheck").value;
+    const investigation = document.getElementById("investigation").value;
+    const medicinecheck = document.getElementById("medicinecheck").value;
+    const medicine = document.getElementById("medicine").value;
+    const naturecheck = document.getElementById("naturecheck").value;
+    const nature = document.getElementById("nature").value;
+    const perceptioncheck = document.getElementById("perceptioncheck").value;
+    const perception = document.getElementById("perception").value;
+    const perfomancecheck = document.getElementById("perfomancecheck").value;
+    const perfomance = document.getElementById("perfomance").value;
     fetch('/sheet', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ classlevel, name, background, race, alignment, experience, strengthmod, strengthnumber, dexteritymod, dexteritynumber, constitutionmod, constitutionnumber, intelligencemod, intelligencenumber, wisdommod, wisdomnumber, charismamod, charismanumber, inspiration, proficiencybonus, strengthsavingthrow, dexteritysavingthrow, constitutionsavingthrow, intelligencesavingthrow, acrobaticscheck }),
+      body: JSON.stringify({ classlevel, name, background, race, alignment, experience, strengthmod, strengthnumber, dexteritymod, dexteritynumber, constitutionmod, constitutionnumber, intelligencemod, intelligencenumber, wisdommod, wisdomnumber, charismamod, charismanumber, inspiration, proficiencybonus, strengthsavingthrow, dexteritysavingthrow, constitutionsavingthrow, intelligencesavingthrow, acrobaticscheck, acrobatics, animalhandlingcheck, animalhandling, arcanacheck, arcana, athleticscheck, athletics, deceptioncheck, deception, historycheck, history, insightcheck, insight, intimidationcheck, intimidation, investigationcheck, investigation, medicinecheck, medicine, naturecheck, nature, perceptioncheck, perception, perfomancecheck, perfomance }),
     })
   }
  
@@ -207,67 +232,67 @@ function Sheet() {
             <div>
               <div className='savingthrowline'>
                 <input type='checkbox' id='acrobaticscheck' checked={character.acrobaticscheck} onChange={e=>setcharacter({...character,acrobaticscheck:e.target.checked})} ></input>
-                <input type='text' className='saving-throw-number' id='acrobatics' placeholder='-1'></input>
+                <input type='text' className='saving-throw-number' id='acrobatics' value={character.acrobatics} onChange={e=>setcharacter({...character,acrobatics:e.target.value})} placeholder='-1'></input>
                 <p>Acrobatics (Dex)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox' id='animalhandlingcheck' ></input>
-                <input type='text' className='saving-throw-number' id='animalhandling' placeholder='+2'></input>
+                <input type='checkbox' id='animalhandlingcheck' checked={character.animalhandlingcheck} onChange={e=>setcharacter({...character,animalhandlingcheck:e.target.checked})} ></input>
+                <input type='text' className='saving-throw-number' id='animalhandling' value={character.animalhandling} onChange={e=>setcharacter({...character,animalhandling:e.target.value})} placeholder='+2'></input>
                 <p>Animal Handling (Wis)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox' id='arcanacheck'></input>
-                <input type='text' className='saving-throw-number' id='arcana' placeholder='+1'></input>
+                <input type='checkbox' id='arcanacheck' checked={character.arcanacheck} onChange={e=>setcharacter({...character,arcanacheck:e.target.checked})}></input>
+                <input type='text' className='saving-throw-number' id='arcana' value={character.arcana} onChange={e=>setcharacter({...character,arcana:e.target.value})} placeholder='+1'></input>
                 <p>Arcana (Int)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox' id='athleticscheck'></input>
-                <input type='text' className='saving-throw-number' id='athletics' placeholder='+2'></input>
+                <input type='checkbox' id='athleticscheck' checked={character.athleticscheck} onChange={e=>setcharacter({...character,athleticscheck:e.target.checked})}></input>
+                <input type='text' className='saving-throw-number' id='athletics' value={character.athletics} onChange={e=>setcharacter({...character,athletics:e.target.value})} placeholder='+2'></input>
                 <p>Athletics (Str)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox' id='deceptioncheck'></input>
-                <input type='text' className='saving-throw-number' id='deception' placeholder='-1'></input>
+                <input type='checkbox' id='deceptioncheck' checked={character.deceptioncheck} onChange={e=>setcharacter({...character,deceptioncheck:e.target.checked})}></input>
+                <input type='text' className='saving-throw-number' id='deception' value={character.deception} onChange={e=>setcharacter({...character,deception:e.target.value})} placeholder='-1'></input>
                 <p>Deception (Cha)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox' id='historycheck'></input>
-                <input type='text' className='saving-throw-number' id='history' placeholder='+1'></input>
+                <input type='checkbox' id='historycheck' checked={character.historycheck} onChange={e=>setcharacter({...character,historycheck:e.target.checked})}></input>
+                <input type='text' className='saving-throw-number' id='history' value={character.history} onChange={e=>setcharacter({...character,history:e.target.value})} placeholder='+1'></input>
                 <p>History (Int)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox' id='insightcheck'></input>
-                <input type='text' className='saving-throw-number' id='insight' placeholder='+2'></input>
+                <input type='checkbox' id='insightcheck' checked={character.insightcheck} onChange={e=>setcharacter({...character,insightcheck:e.target.checked})}></input>
+                <input type='text' className='saving-throw-number' id='insight' value={character.insight} onChange={e=>setcharacter({...character,insight:e.target.value})} placeholder='+2'></input>
                 <p>Insight (Wis)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox' id='intimidationcheck'></input>
-                <input type='text' className='saving-throw-number' id='intimidation' placeholder='-1'></input>
+                <input type='checkbox' id='intimidationcheck' checked={character.intimidationcheck} onChange={e=>setcharacter({...character,intimidationcheck:e.target.checked})}></input>
+                <input type='text' className='saving-throw-number' id='intimidation' value={character.intimidation} onChange={e=>setcharacter({...character,intimidation:e.target.value})} placeholder='-1'></input>
                 <p>Intimidation (Cha)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox' id='investigationcheck'></input>
-                <input type='text' className='saving-throw-number' id='investigation' placeholder='+1'></input>
+                <input type='checkbox' id='investigationcheck' checked={character.investigationcheck} onChange={e=>setcharacter({...character,investigationcheck:e.target.checked})}></input>
+                <input type='text' className='saving-throw-number' id='investigation' value={character.investigation} onChange={e=>setcharacter({...character,investigation:e.target.value})} placeholder='+1'></input>
                 <p>Investigation (Int)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox' id='medicinecheck'></input>
-                <input type='text' className='saving-throw-number' id='medicine' placeholder='+2'></input>
+                <input type='checkbox' id='medicinecheck' checked={character.medicinecheck} onChange={e=>setcharacter({...character,medicinecheck:e.target.checked})}></input>
+                <input type='text' className='saving-throw-number' value={character.medicine} onChange={e=>setcharacter({...character,medicine:e.target.value})} id='medicine' placeholder='+2'></input>
                 <p>Medicine (Wis)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox' id='naturecheck'></input>
-                <input type='text' className='saving-throw-number' id='nature' placeholder='+1'></input>
+                <input type='checkbox' id='naturecheck' checked={character.naturecheck} onChange={e=>setcharacter({...character,naturecheck:e.target.checked})}></input>
+                <input type='text' className='saving-throw-number' id='nature' value={character.nature} onChange={e=>setcharacter({...character,nature:e.target.value})} placeholder='+1'></input>
                 <p>Nature (Int)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox' id='perceptioncheck'></input>
-                <input type='text' className='saving-throw-number' id='perception' placeholder='+2'></input>
+                <input type='checkbox' id='perceptioncheck' checked={character.perceptioncheck} onChange={e=>setcharacter({...character,perceptioncheck:e.target.checked})}></input>
+                <input type='text' className='saving-throw-number' id='perception' value={character.perception} onChange={e=>setcharacter({...character,perception:e.target.value})} placeholder='+2'></input>
                 <p>Perception (Wis)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox' id='perfomancecheck'></input>
-                <input type='text' className='saving-throw-number' id='perfomance' placeholder='-1'></input>
+                <input type='checkbox' id='perfomancecheck' checked={character.perfomancecheck} onChange={e=>setcharacter({...character,perfomancecheck:e.target.checked})}></input>
+                <input type='text' className='saving-throw-number' id='perfomance' value={character.perfomancecheck} onChange={e=>setcharacter({...character,perfomance:e.target.value})}  placeholder='-1'></input>
                 <p>Performance (Cha)</p>
               </div>
               <div className='savingthrowline'>
