@@ -47,7 +47,7 @@ function Sheet() {
         if (response.ok) {
           setcharacter(data)
         } else {
-          alert(data.message); // Handle error
+          alert(data.message);
         }
       } catch (error) {
         console.error('Error fetching characters:', error);
@@ -107,10 +107,38 @@ function Sheet() {
     const perception = document.getElementById("perception").value;
     const perfomancecheck = document.getElementById("perfomancecheck").value;
     const perfomance = document.getElementById("perfomance").value;
+    const persuasioncheck = document.getElementById("persuasioncheck").value;
+    const persuasion = document.getElementById("persuasion").value;
+    const religioncheck = document.getElementById("religioncheck").value;
+    const religion = document.getElementById("religion").value;
+    const sleightofhandscheck = document.getElementById("sleightofhandscheck").value;
+    const sleightofhands = document.getElementById("sleightofhands").value;
+    const stealthcheck = document.getElementById("stealthcheck").value;
+    const stealth = document.getElementById("stealth").value;
+    const survivalcheck = document.getElementById("survivalcheck").value;
+    const survival = document.getElementById("survival").value;
+    const passivewisdom = document.getElementById("passivewisdom").value;
+    const proficienciestextarea = document.getElementById("proficienciestextarea").value;
+    const armor = document.getElementById("armor").value;
+    const initiative = document.getElementById("initiative").value;
+    const speed = document.getElementById("speed").value;
+    const currenthitpoints = document.getElementById("currenthitpoints").value;
+    const temporaryhitpoints = document.getElementById("temporaryhitpoints").value;
+    const hitdice = document.getElementById("hitdice").value;
+    const weapon1 = document.getElementById("weapon1").value;
+    const atkbonus1 = document.getElementById("atkbonus1").value;
+    const dmg1 = document.getElementById("dmg1").value;
+    const weapon2 = document.getElementById("weapon2").value;
+    const atkbonus2 = document.getElementById("atkbonus2").value;
+    const dmg2 = document.getElementById("dmg2").value;
+    const weapon3 = document.getElementById("weapon3").value;
+    const atkbonus3 = document.getElementById("atkbonus3").value;
+    const dmg3 = document.getElementById("dmg3").value;
+
     fetch('/sheet', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ classlevel, name, background, race, alignment, experience, strengthmod, strengthnumber, dexteritymod, dexteritynumber, constitutionmod, constitutionnumber, intelligencemod, intelligencenumber, wisdommod, wisdomnumber, charismamod, charismanumber, inspiration, proficiencybonus, strengthsavingthrow, dexteritysavingthrow, constitutionsavingthrow, intelligencesavingthrow, acrobaticscheck, acrobatics, animalhandlingcheck, animalhandling, arcanacheck, arcana, athleticscheck, athletics, deceptioncheck, deception, historycheck, history, insightcheck, insight, intimidationcheck, intimidation, investigationcheck, investigation, medicinecheck, medicine, naturecheck, nature, perceptioncheck, perception, perfomancecheck, perfomance }),
+      body: JSON.stringify({ classlevel, name, background, race, alignment, experience, strengthmod, strengthnumber, dexteritymod, dexteritynumber, constitutionmod, constitutionnumber, intelligencemod, intelligencenumber, wisdommod, wisdomnumber, charismamod, charismanumber, inspiration, proficiencybonus, strengthsavingthrow, dexteritysavingthrow, constitutionsavingthrow, intelligencesavingthrow, acrobaticscheck, acrobatics, animalhandlingcheck, animalhandling, arcanacheck, arcana, athleticscheck, athletics, deceptioncheck, deception, historycheck, history, insightcheck, insight, intimidationcheck, intimidation, investigationcheck, investigation, medicinecheck, medicine, naturecheck, nature, perceptioncheck, perception, perfomancecheck, perfomance, persuasioncheck, persuasion, religioncheck, religion, sleightofhandscheck, sleightofhands, stealthcheck, stealth, survivalcheck, survival, passivewisdom, proficienciestextarea, armor, initiative, speed, currenthitpoints, temporaryhitpoints, hitdice, weapon1, atkbonus1, dmg1, weapon2, atkbonus2, dmg2,weapon3, atkbonus3, dmg3 }),
     })
   }
  
@@ -296,39 +324,39 @@ function Sheet() {
                 <p>Performance (Cha)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox' id='persuasioncheck'></input>
-                <input type='text' className='saving-throw-number' id='persuasion' placeholder='-1'></input>
+                <input type='checkbox' id='persuasioncheck' checked={character.persuasioncheck}  onChange={e=>setcharacter({...character,persuasioncheck:e.target.checked})}></input>
+                <input type='text' className='saving-throw-number' id='persuasion' value={character.persuasion}  onChange={e=>setcharacter({...character,persuasion:e.target.value})} placeholder='-1'></input>
                 <p>Persuasion (Cha)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox' id='religioncheck'></input>
-                <input type='text' className='saving-throw-number' id='religion' placeholder='+1'></input>
+                <input type='checkbox' id='religioncheck' checked={character.religioncheck}  onChange={e=>setcharacter({...character,religioncheck:e.target.checked})}></input>
+                <input type='text' className='saving-throw-number' id='religion' value={character.religion}  onChange={e=>setcharacter({...character,religion:e.target.value})} placeholder='+1'></input>
                 <p>Religion (Int)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox' id='sleightofhandscheck' defaultChecked></input>
-                <input type='text' className='saving-throw-number' id='sleightofhands' placeholder='+2'></input>
+                <input type='checkbox' id='sleightofhandscheck' checked={character.sleightofhandscheck}  onChange={e=>setcharacter({...character,sleightofhandscheck:e.target.checked})} defaultChecked></input>
+                <input type='text' className='saving-throw-number' id='sleightofhands' value={character.sleightofhands}  onChange={e=>setcharacter({...character,sleightofhands:e.target.value})} placeholder='+2'></input>
                 <p>Sleight of Hand (Dex)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox' id='stealthcheck' defaultChecked></input>
-                <input type='text' className='saving-throw-number' id='stealth' placeholder='+2'></input>
+                <input type='checkbox' id='stealthcheck' checked={character.stealthcheck}  onChange={e=>setcharacter({...character,stealthcheck:e.target.checked})} defaultChecked></input>
+                <input type='text' className='saving-throw-number' id='stealth' value={character.stealth}  onChange={e=>setcharacter({...character,stealth:e.target.value})} placeholder='+2'></input>
                 <p>Stealth (Dex)</p>
               </div>
               <div className='savingthrowline'>
-                <input type='checkbox' id='survivalcheck'></input>
-                <input type='text' className='saving-throw-number' id='survival' placeholder='+2'></input>
+                <input type='checkbox' id='survivalcheck' checked={character.survivalcheck}  onChange={e=>setcharacter({...character,survivalcheck:e.target.checked})}></input>
+                <input type='text' className='saving-throw-number' id='survival' value={character.survival}  onChange={e=>setcharacter({...character,survival:e.target.value})} placeholder='+2'></input>
                 <p>Survival (Wis)</p>
               </div>
               <p>SKILLS</p>
             </div>
             <div className='passive-wisdom-box'>
-              <input type='number' max={20} className='passive-wisdom-input'></input>
+              <input type='number' id='passivewisdom' value={character.passivewisdom} onChange={e=>setcharacter({...character,passivewisdom:e.target.value})} max={20} className='passive-wisdom-input'></input>
               <p>PASSIVE WISDOM (PERCEPTION)</p>
 
             </div>
             <div>
-              <textarea className='proficiencies-textarea' placeholder='Armor: All armor, shields.
+              <textarea className='proficiencies-textarea' id='proficienciestextarea' value={character.proficienciestextarea} onChange={e=>setcharacter({...character,proficienciestextarea:e.target.value})} placeholder='Armor: All armor, shields.
 Weapons: Simple weapons, martial weapons.
 Tools: None.'></textarea>
               <p>OTHER PROFICIENCIES & LANGUAGES</p>
@@ -339,33 +367,33 @@ Tools: None.'></textarea>
         <div className='Hitpointsbox'>
           <div className='arm-init-spd-box'>
             <div className='armorbox'>
-              <input type='number' placeholder='14'></input>
+              <input type='number' placeholder='14' id='armor' value={character.armor} onChange={e=>setcharacter({...character,armor:e.target.value})} ></input>
               <p>Armor class</p>
             </div>
             <div className='armorbox'>
-              <input type='number' placeholder='0'></input>
+              <input type='number' id='initiative' value={character.initiative} onChange={e=>setcharacter({...character,initiative:e.target.value})} placeholder='0'></input>
               <p>Initiative</p>
             </div>
             <div className='armorbox'>
-              <input type='number' placeholder='30'></input>
+              <input type='number' id='speed' value={character.speed} onChange={e=>setcharacter({...character,speed:e.target.value})} placeholder='30'></input>
               <p>Speed</p>
             </div>
           </div>
           <p>
             CURRENT HIT POINTS
           </p>
-          <textarea placeholder='Hit Point Maximum  13'></textarea>
+          <textarea placeholder='Hit Point Maximum  13' id='currenthitpoints' value={character.currenthitpoints} onChange={e=>setcharacter({...character,currenthitpoints:e.target.value})}></textarea>
           <p>
             TEMPORARY HIT POINTS
           </p>
-          <textarea placeholder='1'>
+          <textarea placeholder='1' id='temporaryhitpoints' value={character.temporaryhitpoints} onChange={e=>setcharacter({...character,temporaryhitpoints:e.target.value})}>
           </textarea>
           <div className='hit-dice-box'>
             <div>
               <p>
                 HIT DICE
               </p>
-              <textarea className='hit-dice-textarea' placeholder='Total 1d10 + 3'>
+              <textarea className='hit-dice-textarea' id='hitdice' value={character.hitdice} onChange={e=>setcharacter({...character,hitdice:e.target.value})} placeholder='Total 1d10 + 3'>
               </textarea>
             </div>
             <div className='death-saves-box'>
@@ -394,19 +422,19 @@ Tools: None.'></textarea>
                 <th>DAMAGE/TYPE</th>
               </tr>
               <tr>
-                <th><input type='text' placeholder='Rapier'></input></th>
-                <th><input type='text' placeholder='+2'></input></th>
-                <th><input type='text' placeholder='1d8 + 0, Piercing'></input></th>
+                <th><input type='text' placeholder='Rapier' id='weapon1' value={character.weapon1} onChange={e=>setcharacter({...character,weapon1:e.target.value})}></input></th>
+                <th><input type='text' placeholder='+2' id='atkbonus1' value={character.atkbonus1} onChange={e=>setcharacter({...character,atkbonus1:e.target.value})}></input></th>
+                <th><input type='text' placeholder='1d8 + 0, Piercing' id='dmg1' value={character.dmg1} onChange={e=>setcharacter({...character,dmg1:e.target.value})}></input></th>
               </tr>
               <tr>
-                <th><input type='text' placeholder='Heavy Crossbow'></input></th>
-                <th><input type='text' placeholder='+2'></input></th>
-                <th><input type='text' placeholder='1d10 + 0, Piercing'></input></th>
+                <th><input type='text' placeholder='Heavy Crossbow' id='weapon2' value={character.weapon2} onChange={e=>setcharacter({...character,weapon2:e.target.value})}></input></th>
+                <th><input type='text' placeholder='+2' id='atkbonus2' value={character.atkbonus2} onChange={e=>setcharacter({...character,atkbonus2:e.target.value})}></input></th>
+                <th><input type='text' placeholder='1d10 + 0, Piercing' id='dmg2' value={character.dmg2} onChange={e=>setcharacter({...character,dmg2:e.target.value})}></input></th>
               </tr>
               <tr>
-                <th><input type='text' placeholder='Longsword'></input></th>
-                <th><input type='text' placeholder='+4'></input></th>
-                <th><input type='text' placeholder='1d8/1d10 + 4, Slashing'></input></th>
+                <th><input type='text' placeholder='Longsword' id='weapon3' value={character.weapon3} onChange={e=>setcharacter({...character,weapon3:e.target.value})}></input></th>
+                <th><input type='text' placeholder='+4' id='atkbonus3' value={character.atkbonus3} onChange={e=>setcharacter({...character,atkbonus3:e.target.value})}></input></th>
+                <th><input type='text' placeholder='1d8/1d10 + 4, Slashing' id='dmg3' value={character.dmg3} onChange={e=>setcharacter({...character,dmg3:e.target.value})}></input></th>
               </tr>
             </table>
           </div>
