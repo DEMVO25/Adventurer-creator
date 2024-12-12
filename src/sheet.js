@@ -56,89 +56,13 @@ function Sheet() {
     };
     fetchCharacter()
   }, []);
-
+  
+  console.log(character);
   function submithandler() {
-    const classlevel = document.getElementById("class%lvl").value;
-    const background = document.getElementById("background").value;
-    const race = document.getElementById("race").value;
-    const alignment = document.getElementById("alignment").value;
-    const experience = document.getElementById("experience").value;
-    const strengthmod = document.getElementById("strengthmod").value;
-    const strengthnumber = document.getElementById("strengthnumber").value;
-    const dexteritymod = document.getElementById("dexteritymod").value;
-    const dexteritynumber = document.getElementById("dexteritynumber").value;
-    const constitutionmod = document.getElementById("constitutionmod").value;
-    const constitutionnumber = document.getElementById("constitutionnumber").value;
-    const intelligencemod = document.getElementById("intelligencemod").value;
-    const intelligencenumber = document.getElementById("intelligencenumber").value;
-    const wisdommod = document.getElementById("wisdommod").value;
-    const wisdomnumber = document.getElementById("wisdomnumber").value;
-    const charismamod = document.getElementById("charismamod").value;
-    const charismanumber = document.getElementById("charismanumber").value;
-    const inspiration = document.getElementById("inspiration").value;
-    const proficiencybonus = document.getElementById("proficiencybonus").value;
-    const strengthsavingthrow = document.getElementById("strengthsavingthrow").value;
-    const dexteritysavingthrow = document.getElementById("dexteritysavingthrow").value;
-    const constitutionsavingthrow = document.getElementById("constitutionsavingthrow").value;
-    const intelligencesavingthrow = document.getElementById("intelligencesavingthrow").value;
-    const acrobaticscheck = document.getElementById("acrobaticscheck").value;
-    const acrobatics = document.getElementById("acrobatics").value;
-    const animalhandlingcheck = document.getElementById("animalhandlingcheck").value;
-    const animalhandling = document.getElementById("animalhandling").value;
-    const arcanacheck = document.getElementById("arcanacheck").value;
-    const arcana = document.getElementById("arcana").value;
-    const athleticscheck = document.getElementById("athleticscheck").value;
-    const athletics = document.getElementById("athletics").value;
-    const deceptioncheck = document.getElementById("deceptioncheck").value;
-    const deception = document.getElementById("deception").value;
-    const historycheck = document.getElementById("historycheck").value;
-    const history = document.getElementById("history").value;
-    const insightcheck = document.getElementById("insightcheck").value;
-    const insight = document.getElementById("insight").value;
-    const intimidationcheck = document.getElementById("intimidationcheck").value;
-    const intimidation = document.getElementById("intimidation").value;
-    const investigationcheck = document.getElementById("investigationcheck").value;
-    const investigation = document.getElementById("investigation").value;
-    const medicinecheck = document.getElementById("medicinecheck").value;
-    const medicine = document.getElementById("medicine").value;
-    const naturecheck = document.getElementById("naturecheck").value;
-    const nature = document.getElementById("nature").value;
-    const perceptioncheck = document.getElementById("perceptioncheck").value;
-    const perception = document.getElementById("perception").value;
-    const perfomancecheck = document.getElementById("perfomancecheck").value;
-    const perfomance = document.getElementById("perfomance").value;
-    const persuasioncheck = document.getElementById("persuasioncheck").value;
-    const persuasion = document.getElementById("persuasion").value;
-    const religioncheck = document.getElementById("religioncheck").value;
-    const religion = document.getElementById("religion").value;
-    const sleightofhandscheck = document.getElementById("sleightofhandscheck").value;
-    const sleightofhands = document.getElementById("sleightofhands").value;
-    const stealthcheck = document.getElementById("stealthcheck").value;
-    const stealth = document.getElementById("stealth").value;
-    const survivalcheck = document.getElementById("survivalcheck").value;
-    const survival = document.getElementById("survival").value;
-    const passivewisdom = document.getElementById("passivewisdom").value;
-    const proficienciestextarea = document.getElementById("proficienciestextarea").value;
-    const armor = document.getElementById("armor").value;
-    const initiative = document.getElementById("initiative").value;
-    const speed = document.getElementById("speed").value;
-    const currenthitpoints = document.getElementById("currenthitpoints").value;
-    const temporaryhitpoints = document.getElementById("temporaryhitpoints").value;
-    const hitdice = document.getElementById("hitdice").value;
-    const weapon1 = document.getElementById("weapon1").value;
-    const atkbonus1 = document.getElementById("atkbonus1").value;
-    const dmg1 = document.getElementById("dmg1").value;
-    const weapon2 = document.getElementById("weapon2").value;
-    const atkbonus2 = document.getElementById("atkbonus2").value;
-    const dmg2 = document.getElementById("dmg2").value;
-    const weapon3 = document.getElementById("weapon3").value;
-    const atkbonus3 = document.getElementById("atkbonus3").value;
-    const dmg3 = document.getElementById("dmg3").value;
-
-    fetch('/sheet', {
+        fetch('/sheet', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ classlevel, name, background, race, alignment, experience, strengthmod, strengthnumber, dexteritymod, dexteritynumber, constitutionmod, constitutionnumber, intelligencemod, intelligencenumber, wisdommod, wisdomnumber, charismamod, charismanumber, inspiration, proficiencybonus, strengthsavingthrow, dexteritysavingthrow, constitutionsavingthrow, intelligencesavingthrow, acrobaticscheck, acrobatics, animalhandlingcheck, animalhandling, arcanacheck, arcana, athleticscheck, athletics, deceptioncheck, deception, historycheck, history, insightcheck, insight, intimidationcheck, intimidation, investigationcheck, investigation, medicinecheck, medicine, naturecheck, nature, perceptioncheck, perception, perfomancecheck, perfomance, persuasioncheck, persuasion, religioncheck, religion, sleightofhandscheck, sleightofhands, stealthcheck, stealth, survivalcheck, survival, passivewisdom, proficienciestextarea, armor, initiative, speed, currenthitpoints, temporaryhitpoints, hitdice, weapon1, atkbonus1, dmg1, weapon2, atkbonus2, dmg2,weapon3, atkbonus3, dmg3 }),
+      body: JSON.stringify(character),
     })
   }
  
