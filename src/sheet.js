@@ -366,34 +366,34 @@ Tools: None.'></textarea>
             <div className='coinsboxbody'>
               <div className='coinsbox'>
                 <p>CP</p>
-                <input type='number' placeholder='0' className='coinsinput'></input>
+                <input type='number' placeholder='0' value={character.cp} onChange={e=>setcharacter({...character,cp:e.target.value})} className='coinsinput'></input>
               </div>
               <div className='coinsbox'>
                 <p>SP</p>
-                <input type='number' placeholder='0' className='coinsinput'></input>
+                <input type='number' placeholder='0' value={character.sp} onChange={e=>setcharacter({...character,sp:e.target.value})} className='coinsinput'></input>
               </div>
               <div className='coinsbox'>
                 <p>EP</p>
-                <input type='number' placeholder='0' className='coinsinput'></input>
+                <input type='number' placeholder='0' value={character.ep} onChange={e=>setcharacter({...character,ep:e.target.value})} className='coinsinput'></input>
               </div>
               <div className='coinsbox'>
                 <p>GP</p>
-                <input type='number' placeholder='0' className='coinsinput'></input>
+                <input type='number' placeholder='0' value={character.gp} onChange={e=>setcharacter({...character,gp:e.target.value})} className='coinsinput'></input>
               </div>
               <div className='coinsbox'>
                 <p>PP</p>
-                <input type='number' placeholder='0' className='coinsinput'></input>
+                <input type='number' placeholder='0' value={character.pp} onChange={e=>setcharacter({...character,pp:e.target.value})} className='coinsinput'></input>
               </div>
             </div>
 
             <div>
-              <textarea className='equipment-textarea' placeholder='Set of common clothes'></textarea>
+              <textarea className='equipment-textarea' value={character.equipmenttextarea} onChange={e=>setcharacter({...character,equipmenttextarea:e.target.value})} placeholder='Set of common clothes'></textarea>
               <p>EQUIPMENT</p>
             </div>
           </div>
           <div className='spell-slots-box'>
             <div id='spellslots-1lvl-container'>
-              {Array(checkboxCount) // [0]
+              {Array(checkboxCount) 
                 .fill(0)
                 .map((x, i) => {
                   return (
@@ -497,19 +497,19 @@ Tools: None.'></textarea>
         </div>
         <div>
           <div>
-            <textarea placeholder='I ask a lot of questions' className='personality-textarea'></textarea>
+            <textarea placeholder='I ask a lot of questions' value={character.personality} onChange={e=>setcharacter({...character,personality:e.target.value})} className='personality-textarea'></textarea>
             <p>PERSONALITY TRAITS</p>
           </div>
           <div>
-            <textarea placeholder=' All people, rich or poor, deserve respect' className='personality-textarea'></textarea>
+            <textarea placeholder=' All people, rich or poor, deserve respect' value={character.ideals} onChange={e=>setcharacter({...character,ideals:e.target.value})} className='personality-textarea'></textarea>
             <p>IDEALS</p>
           </div>
           <div>
-            <textarea placeholder='No one else should have to endure the hardships I have been through' className='personality-textarea'></textarea>
+            <textarea placeholder='No one else should have to endure the hardships I have been through' value={character.bonds} onChange={e=>setcharacter({...character,bonds:e.target.value})} className='personality-textarea'></textarea>
             <p>BONDS</p>
           </div>
           <div>
-            <textarea placeholder='If I am outnumbered, I will run away from a fight.' className='personality-textarea'></textarea>
+            <textarea placeholder='If I am outnumbered, I will run away from a fight.' value={character.flaws} onChange={e=>setcharacter({...character,flaws:e.target.value})} className='personality-textarea'></textarea>
             <p>FLAWS</p>
           </div>
           <div>
