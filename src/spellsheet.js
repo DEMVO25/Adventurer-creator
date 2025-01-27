@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 function Spellsheet() {
   const location = useLocation();
 
+  
   const [spells, setspells] = useState({});
 
   const name = location.state.characterName;

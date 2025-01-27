@@ -13,7 +13,7 @@ import {
 } from "react-router-dom";
 
 
-// import spellslotfunction from './adventurersheet-script';
+
 
 function App() {
   const [username, setUsername] = useState('1');

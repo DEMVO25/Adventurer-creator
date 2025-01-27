@@ -7,16 +7,16 @@ function Menu({ username }) {
   const [text, setText] = React.useState('');
 
   React.useEffect(() => {
-    // Fetch existing characters when the component mounts
+    
     const fetchCharacters = async () => {
       try {
         const response = await fetch(`/menu/${username}`);
         const data = await response.json();
         if (response.ok) {
           const existingButtons = data.map((character) => ({ text: character.name }));
-          setButtons(existingButtons); // Set the existing buttons
+          setButtons(existingButtons); 
         } else {
-          alert(data.message); // Handle error
+          alert(data.message); 
         }
       } catch (error) {
         console.error('Error fetching characters:', error);
@@ -25,14 +25,14 @@ function Menu({ username }) {
     };
 
     fetchCharacters();
-  }, [username]); // Dependency array ensures this runs when username changes
+  }, [username]); 
 
   const handleClick = async () => {
     const existingButton = buttons.find((button) => button.text === text);
     if (existingButton) {
       alert(`Button with name "${text}" already exists!`);
     } else {
-      // Send the button text to the server to create a character
+      
       try {
         const response = await fetch('/menu', {
           method: 'POST',
@@ -45,12 +45,12 @@ function Menu({ username }) {
         const data = await response.json();
 
         if (response.ok) {
-          // If character creation is successful, update the state
+          
           setButtons([...buttons, { text }]);
           setText('');
-          alert(data.message); // Show success message
+          alert(data.message); 
         } else {
-          alert(data.message); // Show error message
+          alert(data.message); 
         }
       } catch (error) {
         console.error('Error creating character:', error);
@@ -60,7 +60,7 @@ function Menu({ username }) {
   };
 
   const handleClick1 = (buttonText) => {
-    // Navigate to the character sheet for the selected character
+    
     navigate('/sheet', { state: { characterName: buttonText } });
   };
 
