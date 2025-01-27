@@ -6,6 +6,7 @@ import Login from './login'
 import Register from './register';
 import Menu from './menu';
 import Sheet from './sheet';
+import Spellsheet from './spellsheet';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -25,6 +26,10 @@ function App() {
     {
       path: "/sheet",
       element: <Sheet />,
+    },
+    {
+      path: "/spellsheet",
+      element: <Spellsheet />,
     },
     {
       path: "/register",
