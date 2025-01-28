@@ -22,7 +22,7 @@
     "predeploy": "npm run build",
     "deploy": "master -d build"
   },
-  "proxy": "http://localhost:3001",
+  "proxy": "http://localhost:3002",
   "eslintConfig": {
     "extends": [
       "react-app",
