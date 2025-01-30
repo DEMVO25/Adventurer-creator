@@ -1,3 +1,13 @@
 .spellsheet{
     display: flex;
+    justify-content: space-around;
+    align-items: baseline;
+}
+.spellcastingstats{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.Characterspecs{
+    display: flex;
 }

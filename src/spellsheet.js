@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 function Spellsheet() {
   const location = useLocation();
 
-  
   const [spells, setspells] = useState({});
 
   const name = location.state.characterName;
@@ -40,9 +39,24 @@ function Spellsheet() {
 
   return (
     <div className="spellsheet">
+      <h1>Spellsheet</h1>
       <div>
-        <h1>Spellsheet</h1>
-        {location.state.characterName}
+        <div className="Characterspecs">
+          {location.state.characterName}
+          <div className="spellcastingstats">
+            <input
+              value={spells.spellscastingability}
+              onChange={(e) =>
+                setspells({ ...spells, spellscastingability: e.target.value })
+              }
+              placeholder="16"
+            ></input>
+            <p>Spellcasting Ability</p>
+          </div>
+        </div>
+        <div>
+          <button onClick={submithandlers}>Save</button>
+        </div>
         <h3>Cantrips</h3>
         <textarea
           value={spells.cantrip}
@@ -63,6 +77,14 @@ function Spellsheet() {
         ></textarea>
       </div>
       <div>
+        <input
+          value={spells.spellsavedc}
+          onChange={(e) =>
+            setspells({ ...spells, spellsavedc: e.target.value })
+          }
+          placeholder="16"
+        ></input>
+        <p>Spell Save DC</p>
         <h3>3 Level Spells</h3>
         <textarea
           value={spells.lvl3spells}
@@ -83,6 +105,12 @@ function Spellsheet() {
         ></textarea>
       </div>
       <div>
+        <input
+          value={spells.spellattackbonus}
+          onChange={(e) => setspells({ ...spells, spellattackbonus: e.target.value })}
+          placeholder="+3"
+        ></input>
+        <p>Spell Attack Bonus</p>
         <h3>6 Level Spells</h3>
         <textarea
           value={spells.lvl6spells}
@@ -107,9 +135,6 @@ function Spellsheet() {
           onChange={(e) => setspells({ ...spells, lvl9spells: e.target.value })}
           placeholder="wish"
         ></textarea>
-      </div>
-      <div>
-        <button onClick={submithandlers}>Save</button>
       </div>
     </div>
   );
