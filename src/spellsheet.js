@@ -82,7 +82,7 @@ function Spellsheet() {
           onChange={(e) =>
             setspells({ ...spells, spellsavedc: e.target.value })
           }
-          placeholder="16"
+          placeholder="18"
         ></input>
         <p>Spell Save DC</p>
         <h3>3 Level Spells</h3>
@@ -108,7 +108,7 @@ function Spellsheet() {
         <input
           value={spells.spellattackbonus}
           onChange={(e) => setspells({ ...spells, spellattackbonus: e.target.value })}
-          placeholder="+3"
+          placeholder="+5"
         ></input>
         <p>Spell Attack Bonus</p>
         <h3>6 Level Spells</h3>
