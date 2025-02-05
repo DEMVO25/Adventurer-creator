@@ -1,84 +1,147 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Menu({ username }) {
   const navigate = useNavigate();
-  const [buttons, setButtons] = React.useState([]);
-  const [text, setText] = React.useState('');
+  const [buttons, setButtons] = useState([]);
+  const [text, setText] = useState("");
+  const [editText, setEditText] = useState("");
+  const [editingName, setEditingName] = useState(null);
 
-  React.useEffect(() => {
-    
+  useEffect(() => {
     const fetchCharacters = async () => {
       try {
         const response = await fetch(`/menu/${username}`);
         const data = await response.json();
-        if (response.ok) {
-          const existingButtons = data.map((character) => ({ text: character.name }));
-          setButtons(existingButtons); 
+        if (response.ok && Array.isArray(data)) {
+          setButtons(data.map((character) => ({ text: character.name })));
         } else {
-          alert(data.message); 
+          console.error("Invalid response format:", data);
+          alert("Failed to load characters.");
         }
       } catch (error) {
-        console.error('Error fetching characters:', error);
-        alert('An error occurred while fetching characters.');
+        console.error("Error fetching characters:", error);
+        alert("An error occurred while fetching characters.");
       }
     };
 
     fetchCharacters();
-  }, [username]); 
+  }, [username]); // Fetch only when username changes
+
+  const handleDelete = async (characterName) => {
+    if (!window.confirm(`Are you sure you want to delete "${characterName}"?`)) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/menu/${characterName}`, { method: "DELETE" });
+      const data = await response.json();
+      if (response.ok) {
+        setButtons((prevButtons) => prevButtons.filter((button) => button.text !== characterName));
+        alert(data.message);
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error("Error deleting character:", error);
+      alert("An error occurred while deleting the character.");
+    }
+  };
+
+  const handleEdit = async () => {
+    if (!editText.trim()) {
+      alert("Character name cannot be empty!");
+      return;
+    }
+
+    if (buttons.some((button) => button.text === editText)) {
+      alert("Character name already exists!");
+      return;
+    }
+
+    try {
+      const response = await fetch(`/menu/${editingName}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ newName: editText }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setButtons((prevButtons) =>
+          prevButtons.map((button) =>
+            button.text === editingName ? { text: editText } : button
+          )
+        );
+        setEditingName(null);
+        setEditText("");
+        alert(data.message);
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error("Error updating character:", error);
+      alert("An error occurred while updating the character.");
+    }
+  };
 
   const handleClick = async () => {
-    const existingButton = buttons.find((button) => button.text === text);
-    if (existingButton) {
+    if (buttons.some((button) => button.text === text)) {
       alert(`Button with name "${text}" already exists!`);
-    } else {
-      
-      try {
-        const response = await fetch('/menu', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ buttonname: text, username: username }),
-        });
+      return;
+    }
 
-        const data = await response.json();
+    try {
+      const response = await fetch("/menu", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ buttonname: text, username }),
+      });
 
-        if (response.ok) {
-          
-          setButtons([...buttons, { text }]);
-          setText('');
-          alert(data.message); 
-        } else {
-          alert(data.message); 
-        }
-      } catch (error) {
-        console.error('Error creating character:', error);
-        alert('An error occurred while creating the character.');
+      const data = await response.json();
+      if (response.ok) {
+        setButtons((prevButtons) => [...prevButtons, { text }]);
+        setText("");
+        alert(data.message);
+      } else {
+        alert(data.message);
       }
+    } catch (error) {
+      console.error("Error creating character:", error);
+      alert("An error occurred while creating the character.");
     }
   };
 
   const handleClick1 = (buttonText) => {
-    
-    navigate('/sheet', { state: { characterName: buttonText } });
-  };
-
-  const handleTextChange = (e) => {
-    setText(e.target.value);
+    navigate("/sheet", { state: { characterName: buttonText } });
   };
 
   return (
     <div>
-      <div>
-        <h1>Menu page</h1>
-        <div>{username}</div>
-        <input type="text" value={text} onChange={handleTextChange} />
-        <button onClick={handleClick}>Create Character</button>
-        {buttons.map((button, index) => (
-          <button onClick={() => handleClick1(button.text)} key={index}>{button.text}</button>
-        ))}
-      </div>
+      <h1>Menu page</h1>
+      <div>{username}</div>
+      <input type="text" value={text} onChange={(e) => setText(e.target.value)} />
+      <button onClick={handleClick}>Create Character</button>
+
+      {buttons.map((button, index) => (
+        <div key={index}>
+          {editingName === button.text ? (
+            <div>
+              <input type="text" value={editText} onChange={(e) => setEditText(e.target.value)} />
+              <button onClick={handleEdit}>Save</button>
+              <button onClick={() => setEditingName(null)}>Cancel</button>
+            </div>
+          ) : (
+            <div>
+              <button onClick={() => handleClick1(button.text)}>{button.text}</button>
+              <button onClick={() => { setEditingName(button.text); setEditText(button.text); }}>
+                Edit
+              </button>
+              <button onClick={() => handleDelete(button.text)}>Delete</button>
+            </div>
+          )}
+        </div>
+      ))}
     </div>
   );
 }
