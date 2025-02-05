@@ -9,8 +9,11 @@ import Spellsheet from "./spellsheet";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 function App() {
-  const [username, setUsername] = useState("1");
+  const [username, setUsername] = useState("");
+ 
+
   console.log(username);
+
   const router = createBrowserRouter([
     {
       path: "/",

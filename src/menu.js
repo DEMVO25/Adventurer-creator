@@ -8,6 +8,12 @@ function Menu({ username }) {
   const [editText, setEditText] = useState("");
   const [editingName, setEditingName] = useState(null);
 
+  useEffect (() => {
+    if (!username){
+      navigate('/')
+    }
+  },[]);
+
   useEffect(() => {
     const fetchCharacters = async () => {
       try {
@@ -25,7 +31,9 @@ function Menu({ username }) {
       }
     };
 
-    fetchCharacters();
+    if (username) {
+      fetchCharacters();
+    }
   }, [username]); // Fetch only when username changes
 
   const handleDelete = async (characterName) => {
