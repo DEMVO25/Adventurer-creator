@@ -29,15 +29,21 @@ function Menu({ username }) {
   }, [username]); // Fetch only when username changes
 
   const handleDelete = async (characterName) => {
-    if (!window.confirm(`Are you sure you want to delete "${characterName}"?`)) {
+    if (
+      !window.confirm(`Are you sure you want to delete "${characterName}"?`)
+    ) {
       return;
     }
 
     try {
-      const response = await fetch(`/menu/${characterName}`, { method: "DELETE" });
+      const response = await fetch(`/menu/${characterName}`, {
+        method: "DELETE",
+      });
       const data = await response.json();
       if (response.ok) {
-        setButtons((prevButtons) => prevButtons.filter((button) => button.text !== characterName));
+        setButtons((prevButtons) =>
+          prevButtons.filter((button) => button.text !== characterName)
+        );
         alert(data.message);
       } else {
         alert(data.message);
@@ -120,21 +126,36 @@ function Menu({ username }) {
     <div>
       <h1>Menu page</h1>
       <div>{username}</div>
-      <input type="text" value={text} onChange={(e) => setText(e.target.value)} />
+      <input
+        type="text"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      />
       <button onClick={handleClick}>Create Character</button>
 
       {buttons.map((button, index) => (
         <div key={index}>
           {editingName === button.text ? (
             <div>
-              <input type="text" value={editText} onChange={(e) => setEditText(e.target.value)} />
+              <input
+                type="text"
+                value={editText}
+                onChange={(e) => setEditText(e.target.value)}
+              />
               <button onClick={handleEdit}>Save</button>
               <button onClick={() => setEditingName(null)}>Cancel</button>
             </div>
           ) : (
             <div>
-              <button onClick={() => handleClick1(button.text)}>{button.text}</button>
-              <button onClick={() => { setEditingName(button.text); setEditText(button.text); }}>
+              <button onClick={() => handleClick1(button.text)}>
+                {button.text}
+              </button>
+              <button
+                onClick={() => {
+                  setEditingName(button.text);
+                  setEditText(button.text);
+                }}
+              >
                 Edit
               </button>
               <button onClick={() => handleDelete(button.text)}>Delete</button>

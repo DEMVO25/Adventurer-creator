@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 function Sheet() {
   const navigate = useNavigate();
-  
+
   const location = useLocation();
   const [checkbox, setcheckbox] = useState(false);
   const [checkboxCount, setCheckboxCount] = useState(0);
@@ -65,7 +65,9 @@ function Sheet() {
     });
   }
   function submitspells() {
-    navigate("/spellsheet", { state: { characterName: location.state.characterName } });
+    navigate("/spellsheet", {
+      state: { characterName: location.state.characterName },
+    });
   }
 
   return (
@@ -1454,6 +1456,5 @@ Tools: None."
     </div>
   );
 }
-
 
 export default Sheet;

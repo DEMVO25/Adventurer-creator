@@ -107,7 +107,9 @@ function Spellsheet() {
       <div>
         <input
           value={spells.spellattackbonus}
-          onChange={(e) => setspells({ ...spells, spellattackbonus: e.target.value })}
+          onChange={(e) =>
+            setspells({ ...spells, spellattackbonus: e.target.value })
+          }
           placeholder="+5"
         ></input>
         <p>Spell Attack Bonus</p>
