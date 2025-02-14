@@ -34,7 +34,7 @@ function Menu({ username }) {
     if (username) {
       fetchCharacters();
     }
-  }, [username]); // Fetch only when username changes
+  }, [username]); 
 
   const handleDelete = async (characterName) => {
     if (

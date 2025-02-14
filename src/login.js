@@ -24,7 +24,10 @@ function Login({ setUsername }) {
             })
             .catch(error => console.error(error));
     };
-
+    function passwordreset() {
+        navigate("/passwordreset", {
+          });
+      }
     return (
         <div className="login">
             <h1>Login page</h1>
@@ -40,6 +43,7 @@ function Login({ setUsername }) {
                     <Link to="/register">
                         <button type="button">Register</button>
                     </Link>
+                    <button onClick={passwordreset}>Forgot password</button>
                 </div>
             </form>
         </div>
