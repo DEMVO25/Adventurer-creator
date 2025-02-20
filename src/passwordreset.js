@@ -1,29 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Passwordreset() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
-
+  const dialogref = useRef(null);
+  function toggledialog() {
+    dialogref.current.hasAttribute("open")
+      ? dialogref.current.close()
+      : dialogref.current.showModal();
+  }
   const usernametest = async (username) => {
-    if (!username) {
+    if (!username.trim()) {
       alert("Please enter your username");
     } else
-      fetch("/passwordreset", {
+      fetch(`/passwordreset/${username}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.authenticated) {
-            setUsername(username);
-            navigate("/register");
-          } else {
-            alert("Invalid username");
-          }
-        })
-        .catch((error) => console.error(error));
+      }).then((response) => {
+        if (response.status === 404) {
+          alert("Invalid username");
+        }else{
+          toggledialog()
+        }
+      });
   };
 
   return (
@@ -33,7 +34,10 @@ function Passwordreset() {
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       ></input>
-      <button onClick={() => usernametest(username)}>TEST</button>
+      <dialog className="modal-content" ref={dialogref}>
+          COntent
+        </dialog>
+      <button onClick={() =>{ usernametest(username)}}>TEST</button>
     </div>
   );
 }

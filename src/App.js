@@ -11,7 +11,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 function App() {
   const [username, setUsername] = useState("");
- 
 
   console.log(username);
 
@@ -40,6 +39,7 @@ function App() {
       path: "/passwordreset",
       element: <Passwordreset />,
     },
+  
   ]);
 
   return <RouterProvider router={router} />;
