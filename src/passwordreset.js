@@ -37,9 +37,9 @@ function Passwordreset() {
       }
 
       const data = await response.json();
-      setCorrectResetToken(data.resetToken); // Store the received reset token
+      setCorrectResetToken(data.resetToken);
 
-      toggledialog(dialogref); // Open OTP dialog
+      toggledialog(dialogref);
     } catch (error) {
       console.error("Error requesting reset token:", error);
       alert("Failed to request reset token");
@@ -72,7 +72,7 @@ function Passwordreset() {
       if (response.ok) {
         alert("Password updated successfully!");
         toggledialog(newPasswordDialogRef);
-        navigate("/login");
+        navigate("/");
       } else {
         alert(data.message);
       }

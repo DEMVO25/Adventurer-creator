@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 
 function Sheet() {
   const navigate = useNavigate();
+  const spellslot1 = 3;
+  const spellslot2 = 2;
+  const spellslot3 = 1;
 
   const location = useLocation();
   const [checkbox, setcheckbox] = useState(false);
@@ -347,7 +350,17 @@ function Sheet() {
                 <p>PROFICIENCY BONUS</p>
               </div>
               <div className="savingthrowline">
-                <input type="checkbox" defaultChecked></input>
+                <input
+                  checked={character.strstcheck}
+                  onChange={(e) =>
+                    setcharacter({
+                      ...character,
+                      strstcheck: e.target.checked,
+                    })
+                  }
+                  type="checkbox"
+                  defaultChecked
+                ></input>
                 <input
                   type="text"
                   className="saving-throw-number"
@@ -364,7 +377,16 @@ function Sheet() {
                 <p>Strength</p>
               </div>
               <div className="savingthrowline">
-                <input type="checkbox"></input>
+                <input
+                  checked={character.dexstcheck}
+                  onChange={(e) =>
+                    setcharacter({
+                      ...character,
+                      dexstcheck: e.target.checked,
+                    })
+                  }
+                  type="checkbox"
+                ></input>
                 <input
                   type="text"
                   className="saving-throw-number"
@@ -381,7 +403,16 @@ function Sheet() {
                 <p>Dexterity</p>
               </div>
               <div className="savingthrowline">
-                <input type="checkbox" defaultChecked></input>
+                <input
+                  checked={character.constcheck}
+                  onChange={(e) =>
+                    setcharacter({
+                      ...character,
+                      constcheck: e.target.checked,
+                    })
+                  }
+                  type="checkbox"
+                ></input>
                 <input
                   type="text"
                   className="saving-throw-number"
@@ -398,7 +429,16 @@ function Sheet() {
                 <p>Constitution</p>
               </div>
               <div className="savingthrowline">
-                <input type="checkbox"></input>
+                <input
+                  checked={character.intstcheck}
+                  onChange={(e) =>
+                    setcharacter({
+                      ...character,
+                      intstcheck: e.target.checked,
+                    })
+                  }
+                  type="checkbox"
+                ></input>
                 <input
                   type="text"
                   className="saving-throw-number"
@@ -415,7 +455,16 @@ function Sheet() {
                 <p>Intelligence</p>
               </div>
               <div className="savingthrowline">
-                <input type="checkbox"></input>
+                <input
+                  checked={character.wisstcheck}
+                  onChange={(e) =>
+                    setcharacter({
+                      ...character,
+                      wisstcheck: e.target.checked,
+                    })
+                  }
+                  type="checkbox"
+                ></input>
                 <input
                   type="text"
                   className="saving-throw-number"
@@ -432,7 +481,16 @@ function Sheet() {
                 <p>Wisdom</p>
               </div>
               <div className="savingthrowline">
-                <input type="checkbox"></input>
+                <input
+                  checked={character.chastcheck}
+                  onChange={(e) =>
+                    setcharacter({
+                      ...character,
+                      chastcheck: e.target.checked,
+                    })
+                  }
+                  type="checkbox"
+                ></input>
                 <input
                   type="text"
                   className="saving-throw-number"
@@ -762,7 +820,7 @@ function Sheet() {
                   type="text"
                   className="saving-throw-number"
                   id="perfomance"
-                  value={character.perfomancecheck}
+                  value={character.perfomance}
                   onChange={(e) =>
                     setcharacter({ ...character, perfomance: e.target.value })
                   }
@@ -1004,15 +1062,51 @@ Tools: None."
               <p>DEATH SAVES</p>
               <div className="deathcheckboxes">
                 <p>SUCCESSES</p>
-                <input type="checkbox"></input>
-                <input type="checkbox"></input>
-                <input type="checkbox"></input>
+                <input
+                  checked={character.succes1}
+                  onChange={(e) =>
+                    setcharacter({ ...character, succes1: e.target.checked })
+                  }
+                  type="checkbox"
+                ></input>
+                <input
+                  checked={character.succes2}
+                  onChange={(e) =>
+                    setcharacter({ ...character, succes2: e.target.checked })
+                  }
+                  type="checkbox"
+                ></input>
+                <input
+                  checked={character.succes3}
+                  onChange={(e) =>
+                    setcharacter({ ...character, succes3: e.target.checked })
+                  }
+                  type="checkbox"
+                ></input>
               </div>
               <div className="deathcheckboxes">
                 <p>FAILURES</p>
-                <input type="checkbox"></input>
-                <input type="checkbox"></input>
-                <input type="checkbox"></input>
+                <input
+                  checked={character.fail1}
+                  onChange={(e) =>
+                    setcharacter({ ...character, fail1: e.target.checked })
+                  }
+                  type="checkbox"
+                ></input>
+                <input
+                  checked={character.fail2}
+                  onChange={(e) =>
+                    setcharacter({ ...character, fail2: e.target.checked })
+                  }
+                  type="checkbox"
+                ></input>
+                <input
+                  checked={character.fail3}
+                  onChange={(e) =>
+                    setcharacter({ ...character, fail3: e.target.checked })
+                  }
+                  type="checkbox"
+                ></input>
               </div>
             </div>
           </div>
@@ -1246,7 +1340,8 @@ Tools: None."
               <button
                 id="spellslot2lvl"
                 onClick={() =>
-                  checkboxCount1 < 3 && setCheckboxCount1(checkboxCount1 + 1)
+                  checkboxCount1 < spellslot1 &&
+                  setCheckboxCount1(checkboxCount1 + 1)
                 }
               >
                 +
@@ -1267,7 +1362,8 @@ Tools: None."
               <button
                 id="spellslot3lvl"
                 onClick={(e) =>
-                  checkboxCount2 < 3 && setCheckboxCount2(checkboxCount2 + 1)
+                  checkboxCount2 < spellslot1 &&
+                  setCheckboxCount2(checkboxCount2 + 1)
                 }
               >
                 +
@@ -1288,7 +1384,8 @@ Tools: None."
               <button
                 id="spellslot4lvl"
                 onClick={(e) =>
-                  checkboxCount3 < 3 && setCheckboxCount3(checkboxCount3 + 1)
+                  checkboxCount3 < spellslot1 &&
+                  setCheckboxCount3(checkboxCount3 + 1)
                 }
               >
                 +
@@ -1309,7 +1406,8 @@ Tools: None."
               <button
                 id="spellslot5lvl"
                 onClick={(e) =>
-                  checkboxCount4 < 3 && setCheckboxCount4(checkboxCount4 + 1)
+                  checkboxCount4 < spellslot1 &&
+                  setCheckboxCount4(checkboxCount4 + 1)
                 }
               >
                 +
@@ -1330,7 +1428,8 @@ Tools: None."
               <button
                 id="spellslot6lvl"
                 onClick={(e) =>
-                  checkboxCount5 < 2 && setCheckboxCount5(checkboxCount5 + 1)
+                  checkboxCount5 < spellslot2 &&
+                  setCheckboxCount5(checkboxCount5 + 1)
                 }
               >
                 +
@@ -1351,7 +1450,8 @@ Tools: None."
               <button
                 id="spellslot7lvl"
                 onClick={(e) =>
-                  checkboxCount6 < 2 && setCheckboxCount6(checkboxCount6 + 1)
+                  checkboxCount6 < spellslot2 &&
+                  setCheckboxCount6(checkboxCount6 + 1)
                 }
               >
                 +
@@ -1372,7 +1472,8 @@ Tools: None."
               <button
                 id="spellslot8lvl"
                 onClick={(e) =>
-                  checkboxCount7 < 1 && setCheckboxCount7(checkboxCount7 + 1)
+                  checkboxCount7 < spellslot3 &&
+                  setCheckboxCount7(checkboxCount7 + 1)
                 }
               >
                 +
@@ -1393,7 +1494,8 @@ Tools: None."
               <button
                 id="spellslot9lvl"
                 onClick={(e) =>
-                  checkboxCount8 < 1 && setCheckboxCount8(checkboxCount8 + 1)
+                  checkboxCount8 < spellslot3 &&
+                  setCheckboxCount8(checkboxCount8 + 1)
                 }
               >
                 +

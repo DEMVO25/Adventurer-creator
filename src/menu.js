@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Menu({ username }) {
@@ -7,12 +7,23 @@ function Menu({ username }) {
   const [text, setText] = useState("");
   const [editText, setEditText] = useState("");
   const [editingName, setEditingName] = useState(null);
+  const [deletingName, setDeletingName] = useState(null);
+  const dialogEdit = useRef(null);
+  const dialogDelete = useRef(null);
 
-  useEffect (() => {
-    if (!username){
-      navigate('/')
+  useEffect(() => {
+    if (!username) {
+      navigate("/");
     }
-  },[]);
+  }, []);
+
+  function toggleDialog(dialog) {
+    if (dialog.current) {
+      dialog.current.hasAttribute("open")
+        ? dialog.current.close()
+        : dialog.current.showModal();
+    }
+  }
 
   useEffect(() => {
     const fetchCharacters = async () => {
@@ -34,25 +45,21 @@ function Menu({ username }) {
     if (username) {
       fetchCharacters();
     }
-  }, [username]); 
+  }, [username]);
 
   const handleDelete = async (characterName) => {
-    if (
-      !window.confirm(`Are you sure you want to delete "${characterName}"?`)
-    ) {
-      return;
-    }
-
     try {
-      const response = await fetch(`/menu/${characterName}`, {
+      const response = await fetch(`/menu/${deletingName}`, {
         method: "DELETE",
       });
       const data = await response.json();
       if (response.ok) {
         setButtons((prevButtons) =>
-          prevButtons.filter((button) => button.text !== characterName)
+          prevButtons.filter((button) => button.text !== deletingName)
         );
         alert(data.message);
+        setDeletingName(null);
+        toggleDialog(dialogDelete);
       } else {
         alert(data.message);
       }
@@ -89,6 +96,7 @@ function Menu({ username }) {
         );
         setEditingName(null);
         setEditText("");
+        toggleDialog(dialogEdit);
         alert(data.message);
       } else {
         alert(data.message);
@@ -143,34 +151,62 @@ function Menu({ username }) {
 
       {buttons.map((button, index) => (
         <div key={index}>
-          {editingName === button.text ? (
-            <div>
-              <input
-                type="text"
-                value={editText}
-                onChange={(e) => setEditText(e.target.value)}
-              />
-              <button onClick={handleEdit}>Save</button>
-              <button onClick={() => setEditingName(null)}>Cancel</button>
-            </div>
-          ) : (
-            <div>
-              <button onClick={() => handleClick1(button.text)}>
-                {button.text}
-              </button>
-              <button
-                onClick={() => {
-                  setEditingName(button.text);
-                  setEditText(button.text);
-                }}
-              >
-                Edit
-              </button>
-              <button onClick={() => handleDelete(button.text)}>Delete</button>
-            </div>
-          )}
+          <button onClick={() => handleClick1(button.text)}>
+            {button.text}
+          </button>
+          <button
+            onClick={() => {
+              setEditingName(button.text);
+              setEditText(button.text);
+              toggleDialog(dialogEdit);
+            }}
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => {
+              setDeletingName(button.text);
+              toggleDialog(dialogDelete);
+            }}
+          >
+            Delete
+          </button>
         </div>
       ))}
+
+      <dialog ref={dialogEdit}>
+        <h2>Edit Character</h2>
+        <input
+          type="text"
+          value={editText}
+          onChange={(e) => setEditText(e.target.value)}
+        />
+        <button onClick={handleEdit}>Save</button>
+        <button
+          onClick={() => {
+            setEditingName(null);
+            setEditText("");
+            dialogEdit.current?.close();
+          }}
+        >
+          Cancel
+        </button>
+      </dialog>
+
+      <dialog ref={dialogDelete}>
+        <h2>Delete Character</h2>
+        <p>Are you sure you want to delete "{deletingName}"?</p>
+
+        <button onClick={handleDelete}>Yes</button>
+        <button
+          onClick={() => {
+            setDeletingName(null);
+            dialogDelete.current?.close();
+          }}
+        >
+          Cancel
+        </button>
+      </dialog>
     </div>
   );
 }
