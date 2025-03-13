@@ -5,6 +5,7 @@ function Passwordreset() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [resetToken, setResetToken] = useState("");
   const [correctResetToken, setCorrectResetToken] = useState(null);
   const dialogref = useRef(null);
@@ -23,14 +24,13 @@ function Passwordreset() {
       alert("Please enter your username");
       return;
     }
-
+    toggledialog(dialogref);
     try {
       const response = await fetch(`/passwordreset/${username}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username }),
       });
-
       if (response.status === 404) {
         alert("Invalid username");
         return;
@@ -38,36 +38,47 @@ function Passwordreset() {
 
       const data = await response.json();
       setCorrectResetToken(data.resetToken);
-
-      toggledialog(dialogref);
     } catch (error) {
       console.error("Error requesting reset token:", error);
       alert("Failed to request reset token");
     }
   };
 
-  const verifyresetToken = () => {
-    if (resetToken === correctResetToken) {
-      toggledialog(dialogref);
-      toggledialog(newPasswordDialogRef);
-    } else {
-      alert("Incorrect reset code, please try again");
+  const verifyresetToken = async () => {
+    try {
+      const response = await fetch(`/verifyotp`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, otp: correctResetToken }),
+      });
+
+      if (response.status === 200) {
+        toggledialog(dialogref);
+        toggledialog(newPasswordDialogRef);
+      } else {
+        console.log(response);
+      }
+    } catch (error) {
+      console.error("Error verifying reset token:", error);
+      alert("Failed to verify reset token");
     }
   };
 
   const submitNewPassword = async () => {
-    if (!password.trim()) {
-      alert("Please enter a new password");
-      return;
+    if (!password.trim() || !confirmPassword.trim()) {
+      alert("Please enter a new password and confirm it");
     }
-  
+
+    if (password !== confirmPassword) {
+      return alert("Passwords do not match!");
+    }
     try {
       const response = await fetch(`/updatepassword`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, newPassword: password }), // ✅ Ensure key is "newPassword"
       });
-  
+
       const data = await response.json();
       if (response.ok) {
         alert("Password updated successfully!");
@@ -81,7 +92,6 @@ function Passwordreset() {
       alert("Failed to update password");
     }
   };
-  
 
   return (
     <div>
@@ -92,18 +102,16 @@ function Passwordreset() {
       />
       <button onClick={usernametest}>TEST</button>
 
-      {/* OTP Input Dialog */}
       <dialog className="modal-content" ref={dialogref}>
         <p>Enter the reset code sent to your email:</p>
         <input
           placeholder="Enter the code here"
           value={resetToken}
-          onChange={(e) => setResetToken(e.target.value)}
+          onChange={(e) => setResetToken(e.target.value.trim())}
         />
         <button onClick={verifyresetToken}>Submit Code</button>
       </dialog>
 
-      {/* New Password Dialog */}
       <dialog className="modal-content" ref={newPasswordDialogRef}>
         <p>Enter your new password:</p>
         <input
@@ -112,6 +120,12 @@ function Passwordreset() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+        <input
+          type="password"
+          placeholder="Confirm new password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        ></input>
         <button onClick={submitNewPassword}>Update Password</button>
       </dialog>
     </div>

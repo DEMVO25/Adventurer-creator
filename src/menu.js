@@ -175,6 +175,13 @@ function Menu({ username }) {
       ))}
 
       <dialog ref={dialogEdit}>
+        <button
+          onClick={() => {
+            dialogEdit.current?.close();
+          }}
+        >
+          x
+        </button>
         <h2>Edit Character</h2>
         <input
           type="text"
@@ -194,6 +201,13 @@ function Menu({ username }) {
       </dialog>
 
       <dialog ref={dialogDelete}>
+        <button
+          onClick={() => {
+            dialogDelete.current?.close();
+          }}
+        >
+          x
+        </button>
         <h2>Delete Character</h2>
         <p>Are you sure you want to delete "{deletingName}"?</p>
 

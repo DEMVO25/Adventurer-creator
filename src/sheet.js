@@ -5,37 +5,79 @@ import { useNavigate } from "react-router-dom";
 
 function Sheet() {
   const navigate = useNavigate();
-  const spellslot1 = 3;
-  const spellslot2 = 2;
-  const spellslot3 = 1;
+  const spellslots3 = 3;
+  const spellslots2 = 2;
+  const spellslots1 = 1;
+  const spellslots4 = 4;
 
   const location = useLocation();
-  const [checkbox, setcheckbox] = useState(false);
-  const [checkboxCount, setCheckboxCount] = useState(0);
 
-  const [checkbox1, setcheckbox1] = useState(false);
-  const [checkboxCount1, setCheckboxCount1] = useState(0);
+  const saveCheckbox = (event) => {
+    const checkboxName = event.target.name;
+    setcharacter({
+      ...character,
+      [checkboxName]: event.target.checked,
+    });
+  };
 
-  const [checkbox2, setcheckbox2] = useState(false);
-  const [checkboxCount2, setCheckboxCount2] = useState(0);
+  const saveText = (event) => {
+    const textName = event.target.name;
+    setcharacter({ ...character, [textName]: event.target.value });
+  };
 
-  const [checkbox3, setcheckbox3] = useState(false);
-  const [checkboxCount3, setCheckboxCount3] = useState(0);
+  const saveNumber = (event) => {
+    const numberName = event.target.name;
+    const numberMax = parseInt(event.target.max);
+    const numberMin = parseInt(event.target.min);
+    setcharacter({
+      ...character,
+      [numberName]:
+        event.target.value <= numberMax && event.target.value >= numberMin
+          ? event.target.value
+          : character[numberName],
+    });
+  };
 
-  const [checkbox4, setcheckbox4] = useState(false);
-  const [checkboxCount4, setCheckboxCount4] = useState(0);
+  // [1, 0, 1, 1, 0] - 5 items
+  // [0, 1, 2, 3, 4]
+  // i = 3 true => false
+  // [1, 0, 1, 0]
+  // [1, 0, 1, 0, 0]
 
-  const [checkbox5, setcheckbox5] = useState(false);
-  const [checkboxCount5, setCheckboxCount5] = useState(0);
+  // prices = [12, 12, 124, 124, 232]
+  // [1, 2, 3, 3, 4]
+  // splice(2, 2, prices[2] + prices[3])
+  // [12, 12, 248, 232]
 
-  const [checkbox6, setcheckbox6] = useState(false);
-  const [checkboxCount6, setCheckboxCount6] = useState(0);
+  const setCheckboxes = (event) => {
+    const [spellName, i] = event.target.name.split("."); // spellslot1Checkbox.0 => array => [spellslot1Checkbox, 0]     // spe.ll.slot1Checkbox.0
 
-  const [checkbox7, setcheckbox7] = useState(false);
-  const [checkboxCount7, setCheckboxCount7] = useState(0);
+    const newCheckboxes = [...character[spellName]];
+    newCheckboxes.splice(i, 1, event.target.checked);
 
-  const [checkbox8, setcheckbox8] = useState(false);
-  const [checkboxCount8, setCheckboxCount8] = useState(0);
+    setcharacter({
+      ...character,
+      [spellName]: newCheckboxes,
+    });
+  };
+
+  const addCheckbox = (event) => {
+    const spellName = event.target.name;
+    setcharacter({
+      ...character,
+      [spellName]: [
+        ...(character[spellName] ? character[spellName] : []),
+        false,
+      ],
+    });
+  };
+
+  const deleteCheckbox = (event) => {
+    const spellName = event.target.name;
+    const deletedCheckboxs = [...character[spellName]];
+    deletedCheckboxs.pop();
+    setcharacter({ ...character, [spellName]: deletedCheckboxs });
+  };
 
   const name = location.state.characterName;
 
@@ -83,22 +125,18 @@ function Sheet() {
           <input
             type="text"
             placeholder=" Fighter 1 /Warlock 1"
-            id="class%lvl"
+            name="classlevel"
             value={character.classlevel}
-            onChange={(e) =>
-              setcharacter({ ...character, classlevel: e.target.value })
-            }
+            onChange={saveText}
             max={40}
           ></input>
           <p>Background</p>
           <input
             type="text"
             placeholder="Urchin"
-            id="background"
+            name="background"
             value={character.background}
-            onChange={(e) =>
-              setcharacter({ ...character, background: e.target.value })
-            }
+            onChange={saveText}
             max={40}
           ></input>
         </div>
@@ -107,35 +145,29 @@ function Sheet() {
           <input
             type="text"
             placeholder="Human"
-            id="race"
+            name="race"
             value={character.race}
-            onChange={(e) =>
-              setcharacter({ ...character, race: e.target.value })
-            }
+            onChange={saveText}
             max={40}
           ></input>
           <p>Alignment</p>
           <input
             type="text"
             placeholder="Neutral Good"
-            id="alignment"
+            name="alignment"
             value={character.alignment}
-            onChange={(e) =>
-              setcharacter({ ...character, alignment: e.target.value })
-            }
+            onChange={saveText}
             max={40}
           ></input>
           <p>Experience</p>
           <input
             type="number"
-            id="experience"
+            name="experience"
             value={character.experience}
-            placeholder="0"
-            onChange={(e) =>
-              setcharacter({ ...character, experience: e.target.value })
-            }
             min={0}
             max={355000}
+            placeholder="0"
+            onChange={saveNumber}
           ></input>
         </div>
         <div>
@@ -154,25 +186,18 @@ function Sheet() {
                   placeholder="+2"
                   max={+7}
                   min={-1}
-                  id="strengthmod"
+                  name="strengthmod"
                   value={character.strengthmod}
-                  onChange={(e) =>
-                    setcharacter({ ...character, strengthmod: e.target.value })
-                  }
+                  onChange={saveNumber}
                 ></input>
                 <input
                   type="number"
                   placeholder="15"
                   max={24}
                   min={1}
-                  id="strengthnumber"
+                  name="strengthnumber"
                   value={character.strengthnumber}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      strengthnumber: e.target.value,
-                    })
-                  }
+                  onChange={saveNumber}
                 ></input>
                 <p> Strength</p>
               </div>
@@ -181,25 +206,18 @@ function Sheet() {
               <input
                 type="number"
                 placeholder="+0"
-                id="dexteritymod"
+                name="dexteritymod"
                 value={character.dexteritymod}
-                onChange={(e) =>
-                  setcharacter({ ...character, dexteritymod: e.target.value })
-                }
+                onChange={saveNumber}
                 max={+5}
                 min={-1}
               ></input>
               <input
                 type="number"
                 placeholder="10"
-                id="dexteritynumber"
+                name="dexteritynumber"
                 value={character.dexteritynumber}
-                onChange={(e) =>
-                  setcharacter({
-                    ...character,
-                    dexteritynumber: e.target.value,
-                  })
-                }
+                onChange={saveNumber}
                 max={20}
                 min={1}
               ></input>
@@ -209,28 +227,18 @@ function Sheet() {
               <input
                 type="number"
                 placeholder="+3"
-                id="constitutionmod"
+                name="constitutionmod"
                 value={character.constitutionmod}
-                onChange={(e) =>
-                  setcharacter({
-                    ...character,
-                    constitutionmod: e.target.value,
-                  })
-                }
+                onChange={saveNumber}
                 max={+5}
                 min={-1}
               ></input>
               <input
                 type="number"
                 placeholder="16"
-                id="constitutionnumber"
+                name="constitutionnumber"
                 value={character.constitutionnumber}
-                onChange={(e) =>
-                  setcharacter({
-                    ...character,
-                    constitutionnumber: e.target.value,
-                  })
-                }
+                onChange={saveNumber}
                 max={20}
                 min={1}
               ></input>
@@ -240,28 +248,18 @@ function Sheet() {
               <input
                 type="number"
                 placeholder="+1"
-                id="intelligencemod"
+                name="intelligencemod"
                 value={character.intelligencemod}
-                onChange={(e) =>
-                  setcharacter({
-                    ...character,
-                    intelligencemod: e.target.value,
-                  })
-                }
+                onChange={saveNumber}
                 max={+5}
                 min={-1}
               ></input>
               <input
                 type="number"
                 placeholder="12"
-                id="intelligencenumber"
+                name="intelligencenumber"
                 value={character.intelligencenumber}
-                onChange={(e) =>
-                  setcharacter({
-                    ...character,
-                    intelligencenumber: e.target.value,
-                  })
-                }
+                onChange={saveNumber}
                 max={20}
                 min={1}
               ></input>
@@ -271,22 +269,18 @@ function Sheet() {
               <input
                 type="number"
                 placeholder="+2"
-                id="wisdommod"
+                name="wisdommod"
                 value={character.wisdommod}
-                onChange={(e) =>
-                  setcharacter({ ...character, wisdommod: e.target.value })
-                }
+                onChange={saveNumber}
                 max={+5}
                 min={-1}
               ></input>
               <input
                 type="number"
                 placeholder="14"
-                id="wisdomnumber"
+                name="wisdomnumber"
                 value={character.wisdomnumber}
-                onChange={(e) =>
-                  setcharacter({ ...character, wisdomnumber: e.target.value })
-                }
+                onChange={saveNumber}
                 max={20}
                 min={1}
               ></input>
@@ -296,22 +290,18 @@ function Sheet() {
               <input
                 type="number"
                 placeholder="-1"
-                id="charismamod"
+                name="charismamod"
                 value={character.charismamod}
-                onChange={(e) =>
-                  setcharacter({ ...character, charismamod: e.target.value })
-                }
+                onChange={saveNumber}
                 max={+5}
                 min={-1}
               ></input>
               <input
                 type="number"
                 placeholder="8"
-                id="charismanumber"
+                name="charismanumber"
                 value={character.charismanumber}
-                onChange={(e) =>
-                  setcharacter({ ...character, charismanumber: e.target.value })
-                }
+                onChange={saveNumber}
                 max={20}
                 min={1}
               ></input>
@@ -324,11 +314,9 @@ function Sheet() {
                 <input
                   type="number"
                   placeholder="0"
-                  id="inspiration"
+                  name="inspiration"
                   value={character.inspiration}
-                  onChange={(e) =>
-                    setcharacter({ ...character, inspiration: e.target.value })
-                  }
+                  onChange={saveText}
                   className="inspiration-input"
                 ></input>
                 <p>INSPIRATION</p>
@@ -337,14 +325,9 @@ function Sheet() {
                 <input
                   type="text"
                   placeholder="+2"
-                  id="proficiencybonus"
+                  name="proficiencybonus"
                   value={character.proficiencybonus}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      proficiencybonus: e.target.value,
-                    })
-                  }
+                  onChange={saveText}
                   className="inspiration-input"
                 ></input>
                 <p>PROFICIENCY BONUS</p>
@@ -352,157 +335,115 @@ function Sheet() {
               <div className="savingthrowline">
                 <input
                   checked={character.strstcheck}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      strstcheck: e.target.checked,
-                    })
-                  }
+                  name="strstcheck"
+                  onChange={saveCheckbox}
                   type="checkbox"
                   defaultChecked
                 ></input>
                 <input
                   type="text"
                   className="saving-throw-number"
-                  id="strengthsavingthrow"
+                  name="strengthsavingthrow"
                   value={character.strengthsavingthrow}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      strengthsavingthrow: e.target.value,
-                    })
-                  }
+                  onChange={saveNumber}
                   placeholder="+4"
+                  min={-1}
+                  max={+20}
                 ></input>
                 <p>Strength</p>
               </div>
               <div className="savingthrowline">
                 <input
+                  name="dexstcheck"
                   checked={character.dexstcheck}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      dexstcheck: e.target.checked,
-                    })
-                  }
+                  onChange={saveCheckbox}
                   type="checkbox"
                 ></input>
                 <input
                   type="text"
                   className="saving-throw-number"
-                  id="dexteritysavingthrow"
+                  name="dexteritysavingthrow"
                   value={character.dexteritysavingthrow}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      dexteritysavingthrow: e.target.value,
-                    })
-                  }
+                  onChange={saveNumber}
                   placeholder="+0"
+                  min={-1}
+                  max={+20}
                 ></input>
                 <p>Dexterity</p>
               </div>
               <div className="savingthrowline">
                 <input
+                  name="constcheck"
                   checked={character.constcheck}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      constcheck: e.target.checked,
-                    })
-                  }
+                  onChange={saveCheckbox}
                   type="checkbox"
                 ></input>
                 <input
                   type="text"
                   className="saving-throw-number"
-                  id="constitutionsavingthrow"
+                  name="constitutionsavingthrow"
                   value={character.constitutionsavingthrow}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      constitutionsavingthrow: e.target.value,
-                    })
-                  }
+                  onChange={saveNumber}
                   placeholder="+5"
+                  min={-1}
+                  max={+20}
                 ></input>
                 <p>Constitution</p>
               </div>
               <div className="savingthrowline">
                 <input
+                  name="intstcheck"
                   checked={character.intstcheck}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      intstcheck: e.target.checked,
-                    })
-                  }
+                  onChange={saveCheckbox}
                   type="checkbox"
                 ></input>
                 <input
                   type="text"
                   className="saving-throw-number"
-                  id="intelligencesavingthrow"
+                  name="intelligencesavingthrow"
                   value={character.intelligencesavingthrow}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      intelligencesavingthrow: e.target.value,
-                    })
-                  }
+                  onChange={saveNumber}
                   placeholder="+1"
+                  min={-1}
+                  max={+20}
                 ></input>
                 <p>Intelligence</p>
               </div>
               <div className="savingthrowline">
                 <input
+                  name="wisstcheck"
                   checked={character.wisstcheck}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      wisstcheck: e.target.checked,
-                    })
-                  }
+                  onChange={saveCheckbox}
                   type="checkbox"
                 ></input>
                 <input
                   type="text"
                   className="saving-throw-number"
-                  id="wisdomsavingthrow"
+                  name="wisdomsavingthrow"
                   value={character.wisdomsavingthrow}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      wisdomsavingthrow: e.target.value,
-                    })
-                  }
+                  onChange={saveNumber}
                   placeholder="+2"
+                  min={-1}
+                  max={+20}
                 ></input>
                 <p>Wisdom</p>
               </div>
               <div className="savingthrowline">
                 <input
+                  name="charstcheck"
                   checked={character.chastcheck}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      chastcheck: e.target.checked,
-                    })
-                  }
+                  onChange={saveCheckbox}
                   type="checkbox"
                 ></input>
                 <input
                   type="text"
                   className="saving-throw-number"
-                  id="charismasavingthrow"
+                  name="charismasavingthrow"
                   value={character.charismasavingthrow}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      charismasavingthrow: e.target.value,
-                    })
-                  }
+                  onChange={saveNumber}
                   placeholder="-1"
+                  min={-1}
+                  max={+20}
                 ></input>
                 <p>Charisma</p>
               </div>
@@ -513,195 +454,152 @@ function Sheet() {
               <div className="savingthrowline">
                 <input
                   type="checkbox"
-                  id="acrobaticscheck"
+                  name="acrobaticscheck"
                   checked={character.acrobaticscheck}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      acrobaticscheck: e.target.checked,
-                    })
-                  }
+                  onChange={saveCheckbox}
                 ></input>
                 <input
                   type="text"
                   className="saving-throw-number"
-                  id="acrobatics"
+                  name="acrobatics"
                   value={character.acrobatics}
-                  onChange={(e) =>
-                    setcharacter({ ...character, acrobatics: e.target.value })
-                  }
+                  onChange={saveNumber}
                   placeholder="-1"
+                  min={-1}
+                  max={+20}
                 ></input>
                 <p>Acrobatics (Dex)</p>
               </div>
               <div className="savingthrowline">
                 <input
                   type="checkbox"
-                  id="animalhandlingcheck"
+                  name="animalhandlingcheck"
                   checked={character.animalhandlingcheck}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      animalhandlingcheck: e.target.checked,
-                    })
-                  }
+                  onChange={saveCheckbox}
                 ></input>
                 <input
                   type="text"
                   className="saving-throw-number"
-                  id="animalhandling"
+                  name="animalhandling"
                   value={character.animalhandling}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      animalhandling: e.target.value,
-                    })
-                  }
+                  onChange={saveNumber}
                   placeholder="+2"
+                  min={-1}
+                  max={+20}
                 ></input>
                 <p>Animal Handling (Wis)</p>
               </div>
               <div className="savingthrowline">
                 <input
                   type="checkbox"
-                  id="arcanacheck"
+                  name="arcanacheck"
                   checked={character.arcanacheck}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      arcanacheck: e.target.checked,
-                    })
-                  }
+                  onChange={saveCheckbox}
                 ></input>
                 <input
                   type="text"
                   className="saving-throw-number"
-                  id="arcana"
+                  name="arcana"
                   value={character.arcana}
-                  onChange={(e) =>
-                    setcharacter({ ...character, arcana: e.target.value })
-                  }
+                  onChange={saveNumber}
                   placeholder="+1"
+                  min={-1}
+                  max={+20}
                 ></input>
                 <p>Arcana (Int)</p>
               </div>
               <div className="savingthrowline">
                 <input
                   type="checkbox"
-                  id="athleticscheck"
+                  name="athleticscheck"
                   checked={character.athleticscheck}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      athleticscheck: e.target.checked,
-                    })
-                  }
+                  onChange={saveCheckbox}
                 ></input>
                 <input
                   type="text"
                   className="saving-throw-number"
-                  id="athletics"
+                  name="athletics"
                   value={character.athletics}
-                  onChange={(e) =>
-                    setcharacter({ ...character, athletics: e.target.value })
-                  }
+                  onChange={saveNumber}
                   placeholder="+2"
+                  min={-1}
+                  max={+20}
                 ></input>
                 <p>Athletics (Str)</p>
               </div>
               <div className="savingthrowline">
                 <input
                   type="checkbox"
-                  id="deceptioncheck"
+                  name="deceptioncheck"
                   checked={character.deceptioncheck}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      deceptioncheck: e.target.checked,
-                    })
-                  }
+                  onChange={saveCheckbox}
                 ></input>
                 <input
                   type="text"
                   className="saving-throw-number"
-                  id="deception"
+                  name="deception"
                   value={character.deception}
-                  onChange={(e) =>
-                    setcharacter({ ...character, deception: e.target.value })
-                  }
+                  onChange={saveNumber}
                   placeholder="-1"
+                  min={-1}
+                  max={+20}
                 ></input>
                 <p>Deception (Cha)</p>
               </div>
               <div className="savingthrowline">
                 <input
                   type="checkbox"
-                  id="historycheck"
+                  name="historycheck"
                   checked={character.historycheck}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      historycheck: e.target.checked,
-                    })
-                  }
+                  onChange={saveCheckbox}
                 ></input>
                 <input
                   type="text"
                   className="saving-throw-number"
-                  id="history"
+                  name="history"
                   value={character.history}
-                  onChange={(e) =>
-                    setcharacter({ ...character, history: e.target.value })
-                  }
+                  onChange={saveNumber}
                   placeholder="+1"
+                  min={-1}
+                  max={+20}
                 ></input>
                 <p>History (Int)</p>
               </div>
               <div className="savingthrowline">
                 <input
                   type="checkbox"
-                  id="insightcheck"
+                  name="insightcheck"
                   checked={character.insightcheck}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      insightcheck: e.target.checked,
-                    })
-                  }
+                  onChange={saveCheckbox}
                 ></input>
                 <input
                   type="text"
                   className="saving-throw-number"
-                  id="insight"
+                  name="insight"
                   value={character.insight}
-                  onChange={(e) =>
-                    setcharacter({ ...character, insight: e.target.value })
-                  }
+                  onChange={saveNumber}
                   placeholder="+2"
+                  min={-1}
+                  max={+20}
                 ></input>
                 <p>Insight (Wis)</p>
               </div>
               <div className="savingthrowline">
                 <input
                   type="checkbox"
-                  id="intimidationcheck"
+                  name="intimidationcheck"
                   checked={character.intimidationcheck}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      intimidationcheck: e.target.checked,
-                    })
-                  }
+                  onChange={saveCheckbox}
                 ></input>
                 <input
                   type="text"
                   className="saving-throw-number"
-                  id="intimidation"
+                  name="intimidation"
                   value={character.intimidation}
-                  onChange={(e) =>
-                    setcharacter({ ...character, intimidation: e.target.value })
-                  }
+                  onChange={saveNumber}
                   placeholder="-1"
+                  min={-1}
+                  max={+20}
                 ></input>
                 <p>Intimidation (Cha)</p>
               </div>
@@ -1305,202 +1203,238 @@ Tools: None."
           </div>
           <div className="spell-slots-box">
             <div id="spellslots-1lvl-container">
-              {Array(checkboxCount)
-                .fill(0)
-                .map((x, i) => {
-                  return (
-                    <input
-                      type="checkbox"
-                      value={checkbox}
-                      onChange={(e) => setcheckbox(e.target.checked)}
-                    ></input>
-                  );
-                })}
-              <button
-                id="spellslot1lvl"
-                onClick={(e) =>
-                  checkboxCount < 4 && setCheckboxCount(checkboxCount + 1)
-                }
-              >
-                +
-              </button>
+              {character.spellslot1Checkbox?.map((x, i) => {
+                return (
+                  <input
+                    type="checkbox"
+                    name={`spellslot1Checkbox.${i}`} // spellslot1Checkbox.0, spellslot1Checkbox.1
+                    checked={x}
+                    onChange={setCheckboxes}
+                  ></input>
+                );
+              })}
+
+              {character.spellslot1Checkbox?.length > 0 && (
+                <button name="spellslot1Checkbox" onClick={deleteCheckbox}>
+                  -
+                </button>
+              )}
+
+              {(!character.spellslot1Checkbox ||
+                character.spellslot1Checkbox.length < spellslots4) && (
+                <button name="spellslot1Checkbox" onClick={addCheckbox}>
+                  +
+                </button>
+              )}
             </div>
             <div>
-              {Array(checkboxCount1)
-                .fill(0)
-                .map((x, i) => {
-                  return (
-                    <input
-                      type="checkbox"
-                      value={checkbox1}
-                      onChange={(e) => setcheckbox1(e.target.checked)}
-                    ></input>
-                  );
-                })}
-              <button
-                id="spellslot2lvl"
-                onClick={() =>
-                  checkboxCount1 < spellslot1 &&
-                  setCheckboxCount1(checkboxCount1 + 1)
-                }
-              >
-                +
-              </button>
+              {character.spellslot2Checkbox?.map((x, i) => {
+                return (
+                  <input
+                    type="checkbox"
+                    name={`spellslot2Checkbox.${i}`}
+                    checked={x}
+                    onChange={setCheckboxes}
+                  ></input>
+                );
+              })}
+
+              {character.spellslot2Checkbox?.length > 0 && (
+                <button name="spellslot2Checkbox" onClick={deleteCheckbox}>
+                  -
+                </button>
+              )}
+
+              {(!character.spellslot2Checkbox ||
+                character.spellslot2Checkbox.length < spellslots3) && (
+                <button name="spellslot2Checkbox" onClick={addCheckbox}>
+                  +
+                </button>
+              )}
             </div>
+
             <div>
-              {Array(checkboxCount2)
-                .fill(0)
-                .map((x, i) => {
-                  return (
-                    <input
-                      type="checkbox"
-                      value={checkbox2}
-                      onChange={(e) => setcheckbox2(e.target.checked)}
-                    ></input>
-                  );
-                })}
-              <button
-                id="spellslot3lvl"
-                onClick={(e) =>
-                  checkboxCount2 < spellslot1 &&
-                  setCheckboxCount2(checkboxCount2 + 1)
-                }
-              >
-                +
-              </button>
+              {character.spellslot3Checkbox?.map((x, i) => {
+                return (
+                  <input
+                    type="checkbox"
+                    name={`spellslot3Checkbox.${i}`}
+                    checked={x}
+                    onChange={setCheckboxes}
+                  ></input>
+                );
+              })}
+
+              {character.spellslot3Checkbox?.length > 0 && (
+                <button name="spellslot3Checkbox" onClick={deleteCheckbox}>
+                  -
+                </button>
+              )}
+
+              {(!character.spellslot3Checkbox ||
+                character.spellslot3Checkbox.length < spellslots3) && (
+                <button name="spellslot3Checkbox" onClick={addCheckbox}>
+                  +
+                </button>
+              )}
             </div>
+
             <div>
-              {Array(checkboxCount3)
-                .fill(0)
-                .map((x, i) => {
-                  return (
-                    <input
-                      type="checkbox"
-                      value={checkbox3}
-                      onChange={(e) => setcheckbox3(e.target.checked)}
-                    ></input>
-                  );
-                })}
-              <button
-                id="spellslot4lvl"
-                onClick={(e) =>
-                  checkboxCount3 < spellslot1 &&
-                  setCheckboxCount3(checkboxCount3 + 1)
-                }
-              >
-                +
-              </button>
+              {character.spellslot4Checkbox?.map((x, i) => {
+                return (
+                  <input
+                    type="checkbox"
+                    name={`spellslot4Checkbox.${i}`}
+                    checked={x}
+                    onChange={setCheckboxes}
+                  ></input>
+                );
+              })}
+
+              {character.spellslot4Checkbox?.length > 0 && (
+                <button name="spellslot4Checkbox" onClick={deleteCheckbox}>
+                  -
+                </button>
+              )}
+
+              {(!character.spellslot4Checkbox ||
+                character.spellslot4Checkbox.length < spellslots3) && (
+                <button name="spellslot4Checkbox" onClick={addCheckbox}>
+                  +
+                </button>
+              )}
             </div>
+
             <div>
-              {Array(checkboxCount4)
-                .fill(0)
-                .map((x, i) => {
-                  return (
-                    <input
-                      type="checkbox"
-                      value={checkbox4}
-                      onChange={(e) => setcheckbox4(e.target.checked)}
-                    ></input>
-                  );
-                })}
-              <button
-                id="spellslot5lvl"
-                onClick={(e) =>
-                  checkboxCount4 < spellslot1 &&
-                  setCheckboxCount4(checkboxCount4 + 1)
-                }
-              >
-                +
-              </button>
+              {character.spellslot5Checkbox?.map((x, i) => {
+                return (
+                  <input
+                    type="checkbox"
+                    name={`spellslot5Checkbox.${i}`}
+                    checked={x}
+                    onChange={setCheckboxes}
+                  ></input>
+                );
+              })}
+
+              {character.spellslot5Checkbox?.length > 0 && (
+                <button name="spellslot5Checkbox" onClick={deleteCheckbox}>
+                  -
+                </button>
+              )}
+
+              {(!character.spellslot5Checkbox ||
+                character.spellslot5Checkbox.length < spellslots3) && (
+                <button name="spellslot5Checkbox" onClick={addCheckbox}>
+                  +
+                </button>
+              )}
             </div>
+
             <div>
-              {Array(checkboxCount5)
-                .fill(0)
-                .map((x, i) => {
-                  return (
-                    <input
-                      type="checkbox"
-                      value={checkbox5}
-                      onChange={(e) => setcheckbox5(e.target.checked)}
-                    ></input>
-                  );
-                })}
-              <button
-                id="spellslot6lvl"
-                onClick={(e) =>
-                  checkboxCount5 < spellslot2 &&
-                  setCheckboxCount5(checkboxCount5 + 1)
-                }
-              >
-                +
-              </button>
+              {character.spellslot6Checkbox?.map((x, i) => {
+                return (
+                  <input
+                    type="checkbox"
+                    name={`spellslot6Checkbox.${i}`}
+                    checked={x}
+                    onChange={setCheckboxes}
+                  ></input>
+                );
+              })}
+
+              {character.spellslot6Checkbox?.length > 0 && (
+                <button name="spellslot6Checkbox" onClick={deleteCheckbox}>
+                  -
+                </button>
+              )}
+
+              {(!character.spellslot6Checkbox ||
+                character.spellslot6Checkbox.length < spellslots2) && (
+                <button name="spellslot6Checkbox" onClick={addCheckbox}>
+                  +
+                </button>
+              )}
             </div>
+
             <div>
-              {Array(checkboxCount6)
-                .fill(0)
-                .map((x, i) => {
-                  return (
-                    <input
-                      type="checkbox"
-                      value={checkbox6}
-                      onChange={(e) => setcheckbox6(e.target.checked)}
-                    ></input>
-                  );
-                })}
-              <button
-                id="spellslot7lvl"
-                onClick={(e) =>
-                  checkboxCount6 < spellslot2 &&
-                  setCheckboxCount6(checkboxCount6 + 1)
-                }
-              >
-                +
-              </button>
+              {character.spellslot7Checkbox?.map((x, i) => {
+                return (
+                  <input
+                    type="checkbox"
+                    name={`spellslot7Checkbox.${i}`}
+                    checked={x}
+                    onChange={setCheckboxes}
+                  ></input>
+                );
+              })}
+
+              {character.spellslot7Checkbox?.length > 0 && (
+                <button name="spellslot7Checkbox" onClick={deleteCheckbox}>
+                  -
+                </button>
+              )}
+
+              {(!character.spellslot7Checkbox ||
+                character.spellslot7Checkbox.length < spellslots2) && (
+                <button name="spellslot7Checkbox" onClick={addCheckbox}>
+                  +
+                </button>
+              )}
             </div>
+
             <div>
-              {Array(checkboxCount7)
-                .fill(0)
-                .map((x, i) => {
-                  return (
-                    <input
-                      type="checkbox"
-                      value={checkbox7}
-                      onChange={(e) => setcheckbox7(e.target.checked)}
-                    ></input>
-                  );
-                })}
-              <button
-                id="spellslot8lvl"
-                onClick={(e) =>
-                  checkboxCount7 < spellslot3 &&
-                  setCheckboxCount7(checkboxCount7 + 1)
-                }
-              >
-                +
-              </button>
+              {character.spellslot8Checkbox?.map((x, i) => {
+                return (
+                  <input
+                    type="checkbox"
+                    name={`spellslot8Checkbox.${i}`}
+                    checked={x}
+                    onChange={setCheckboxes}
+                  ></input>
+                );
+              })}
+
+              {character.spellslot8Checkbox?.length > 0 && (
+                <button name="spellslot8Checkbox" onClick={deleteCheckbox}>
+                  -
+                </button>
+              )}
+
+              {(!character.spellslot8Checkbox ||
+                character.spellslot8Checkbox.length < spellslots1) && (
+                <button name="spellslot8Checkbox" onClick={addCheckbox}>
+                  +
+                </button>
+              )}
             </div>
+
             <div>
-              {Array(checkboxCount8)
-                .fill(0)
-                .map((x, i) => {
-                  return (
-                    <input
-                      type="checkbox"
-                      value={checkbox8}
-                      onChange={(e) => setcheckbox8(e.target.checked)}
-                    ></input>
-                  );
-                })}
-              <button
-                id="spellslot9lvl"
-                onClick={(e) =>
-                  checkboxCount8 < spellslot3 &&
-                  setCheckboxCount8(checkboxCount8 + 1)
-                }
-              >
-                +
-              </button>
+              {character.spellslot9Checkbox?.map((x, i) => {
+                return (
+                  <input
+                    type="checkbox"
+                    name={`spellslot9Checkbox.${i}`}
+                    checked={x}
+                    onChange={setCheckboxes}
+                  ></input>
+                );
+              })}
+
+              {character.spellslot9Checkbox?.length > 0 && (
+                <button name="spellslot9Checkbox" onClick={deleteCheckbox}>
+                  -
+                </button>
+              )}
+
+              {(!character.spellslot9Checkbox ||
+                character.spellslot9Checkbox.length < spellslots1) && (
+                <button name="spellslot9Checkbox" onClick={addCheckbox}>
+                  +
+                </button>
+              )}
             </div>
+
             <p>SPELL SLOTS</p>
           </div>
         </div>
