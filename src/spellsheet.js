@@ -1,9 +1,12 @@
 import "./spellsheet.css";
 import { useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import DiceMenu, { toggledialog } from "./dialogs";
 
 function Spellsheet() {
   const location = useLocation();
+
+  const menuRef = useRef(null);
 
   const [spells, setspells] = useState({});
 
@@ -55,6 +58,8 @@ function Spellsheet() {
           </div>
         </div>
         <div>
+          <button onClick={() => toggledialog(menuRef)}>Dice Menu</button>
+          <DiceMenu menuRef={menuRef}></DiceMenu>
           <button onClick={submithandlers}>Save</button>
         </div>
         <h3>Cantrips</h3>

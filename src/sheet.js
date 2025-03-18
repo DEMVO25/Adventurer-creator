@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./App.css";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import  DiceMenu,  { toggledialog} from "./dialogs";
 
 function Sheet() {
   const navigate = useNavigate();
@@ -12,6 +13,8 @@ function Sheet() {
 
   const location = useLocation();
 
+  const menuRef = useRef(null);
+  
   const saveCheckbox = (event) => {
     const checkboxName = event.target.name;
     setcharacter({
@@ -173,6 +176,8 @@ function Sheet() {
         <div>
           <button onClick={submithandler}>Save</button>
           <button onClick={submitspells}>Spellsheet</button>
+          <button onClick={()=>toggledialog(menuRef)}>Dice Menu</button>
+          <DiceMenu menuRef={menuRef}></DiceMenu>
         </div>
       </div>
 
@@ -316,18 +321,22 @@ function Sheet() {
                   placeholder="0"
                   name="inspiration"
                   value={character.inspiration}
-                  onChange={saveText}
+                  onChange={saveNumber}
+                  min={0}
+                  max={10}
                   className="inspiration-input"
                 ></input>
                 <p>INSPIRATION</p>
               </div>
               <div className="inspiration-box">
                 <input
-                  type="text"
+                  type="number"
                   placeholder="+2"
                   name="proficiencybonus"
                   value={character.proficiencybonus}
-                  onChange={saveText}
+                  onChange={saveNumber}
+                  min={+2}
+                  max={+20}
                   className="inspiration-input"
                 ></input>
                 <p>PROFICIENCY BONUS</p>
@@ -341,7 +350,7 @@ function Sheet() {
                   defaultChecked
                 ></input>
                 <input
-                  type="text"
+                  type="number"
                   className="saving-throw-number"
                   name="strengthsavingthrow"
                   value={character.strengthsavingthrow}
@@ -360,7 +369,7 @@ function Sheet() {
                   type="checkbox"
                 ></input>
                 <input
-                  type="text"
+                  type="number"
                   className="saving-throw-number"
                   name="dexteritysavingthrow"
                   value={character.dexteritysavingthrow}
@@ -379,7 +388,7 @@ function Sheet() {
                   type="checkbox"
                 ></input>
                 <input
-                  type="text"
+                  type="number"
                   className="saving-throw-number"
                   name="constitutionsavingthrow"
                   value={character.constitutionsavingthrow}
@@ -398,7 +407,7 @@ function Sheet() {
                   type="checkbox"
                 ></input>
                 <input
-                  type="text"
+                  type="number"
                   className="saving-throw-number"
                   name="intelligencesavingthrow"
                   value={character.intelligencesavingthrow}
@@ -417,7 +426,7 @@ function Sheet() {
                   type="checkbox"
                 ></input>
                 <input
-                  type="text"
+                  type="number"
                   className="saving-throw-number"
                   name="wisdomsavingthrow"
                   value={character.wisdomsavingthrow}
@@ -436,7 +445,7 @@ function Sheet() {
                   type="checkbox"
                 ></input>
                 <input
-                  type="text"
+                  type="number"
                   className="saving-throw-number"
                   name="charismasavingthrow"
                   value={character.charismasavingthrow}
@@ -459,7 +468,7 @@ function Sheet() {
                   onChange={saveCheckbox}
                 ></input>
                 <input
-                  type="text"
+                  type="number"
                   className="saving-throw-number"
                   name="acrobatics"
                   value={character.acrobatics}
@@ -478,7 +487,7 @@ function Sheet() {
                   onChange={saveCheckbox}
                 ></input>
                 <input
-                  type="text"
+                  type="number"
                   className="saving-throw-number"
                   name="animalhandling"
                   value={character.animalhandling}
@@ -497,7 +506,7 @@ function Sheet() {
                   onChange={saveCheckbox}
                 ></input>
                 <input
-                  type="text"
+                  type="number"
                   className="saving-throw-number"
                   name="arcana"
                   value={character.arcana}
@@ -516,7 +525,7 @@ function Sheet() {
                   onChange={saveCheckbox}
                 ></input>
                 <input
-                  type="text"
+                  type="number"
                   className="saving-throw-number"
                   name="athletics"
                   value={character.athletics}
@@ -535,7 +544,7 @@ function Sheet() {
                   onChange={saveCheckbox}
                 ></input>
                 <input
-                  type="text"
+                  type="number"
                   className="saving-throw-number"
                   name="deception"
                   value={character.deception}
@@ -554,7 +563,7 @@ function Sheet() {
                   onChange={saveCheckbox}
                 ></input>
                 <input
-                  type="text"
+                  type="number"
                   className="saving-throw-number"
                   name="history"
                   value={character.history}
@@ -573,7 +582,7 @@ function Sheet() {
                   onChange={saveCheckbox}
                 ></input>
                 <input
-                  type="text"
+                  type="number"
                   className="saving-throw-number"
                   name="insight"
                   value={character.insight}
@@ -592,7 +601,7 @@ function Sheet() {
                   onChange={saveCheckbox}
                 ></input>
                 <input
-                  type="text"
+                  type="number"
                   className="saving-throw-number"
                   name="intimidation"
                   value={character.intimidation}
@@ -606,50 +615,37 @@ function Sheet() {
               <div className="savingthrowline">
                 <input
                   type="checkbox"
-                  id="investigationcheck"
+                  name="investigationcheck"
                   checked={character.investigationcheck}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      investigationcheck: e.target.checked,
-                    })
-                  }
+                  onChange={saveCheckbox}
                 ></input>
                 <input
-                  type="text"
+                  type="number"
                   className="saving-throw-number"
-                  id="investigation"
+                  name="investigation"
                   value={character.investigation}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      investigation: e.target.value,
-                    })
-                  }
+                  onChange={saveNumber}
                   placeholder="+1"
+                  min={-1}
+                  max={+20}
                 ></input>
                 <p>Investigation (Int)</p>
               </div>
               <div className="savingthrowline">
                 <input
                   type="checkbox"
-                  id="medicinecheck"
+                  name="medicinecheck"
                   checked={character.medicinecheck}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      medicinecheck: e.target.checked,
-                    })
-                  }
+                  onChange={saveCheckbox}
                 ></input>
                 <input
-                  type="text"
+                  type="number"
                   className="saving-throw-number"
                   value={character.medicine}
-                  onChange={(e) =>
-                    setcharacter({ ...character, medicine: e.target.value })
-                  }
-                  id="medicine"
+                  onChange={saveNumber}
+                  name="medicine"
+                  min={-1}
+                  max={+20}
                   placeholder="+2"
                 ></input>
                 <p>Medicine (Wis)</p>
@@ -657,23 +653,18 @@ function Sheet() {
               <div className="savingthrowline">
                 <input
                   type="checkbox"
-                  id="naturecheck"
+                  name="naturecheck"
                   checked={character.naturecheck}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      naturecheck: e.target.checked,
-                    })
-                  }
+                  onChange={saveCheckbox}
                 ></input>
                 <input
-                  type="text"
+                  type="number"
                   className="saving-throw-number"
-                  id="nature"
+                  name="nature"
                   value={character.nature}
-                  onChange={(e) =>
-                    setcharacter({ ...character, nature: e.target.value })
-                  }
+                  onChange={saveNumber}
+                  min={-1}
+                  max={+20}
                   placeholder="+1"
                 ></input>
                 <p>Nature (Int)</p>
@@ -681,47 +672,37 @@ function Sheet() {
               <div className="savingthrowline">
                 <input
                   type="checkbox"
-                  id="perceptioncheck"
+                  name="perceptioncheck"
                   checked={character.perceptioncheck}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      perceptioncheck: e.target.checked,
-                    })
-                  }
+                  onChange={saveCheckbox}
                 ></input>
                 <input
-                  type="text"
+                  type="number"
                   className="saving-throw-number"
-                  id="perception"
+                  name="perception"
                   value={character.perception}
-                  onChange={(e) =>
-                    setcharacter({ ...character, perception: e.target.value })
-                  }
+                  onChange={saveNumber}
                   placeholder="+2"
+                  min={-1}
+                  max={+20}
                 ></input>
                 <p>Perception (Wis)</p>
               </div>
               <div className="savingthrowline">
                 <input
                   type="checkbox"
-                  id="perfomancecheck"
+                  name="perfomancecheck"
                   checked={character.perfomancecheck}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      perfomancecheck: e.target.checked,
-                    })
-                  }
+                  onChange={saveCheckbox}
                 ></input>
                 <input
-                  type="text"
+                  type="number"
                   className="saving-throw-number"
-                  id="perfomance"
+                  name="perfomance"
                   value={character.perfomance}
-                  onChange={(e) =>
-                    setcharacter({ ...character, perfomance: e.target.value })
-                  }
+                  onChange={saveNumber}
+                  min={-1}
+                  max={+20}
                   placeholder="-1"
                 ></input>
                 <p>Performance (Cha)</p>
@@ -729,47 +710,37 @@ function Sheet() {
               <div className="savingthrowline">
                 <input
                   type="checkbox"
-                  id="persuasioncheck"
+                  name="persuasioncheck"
                   checked={character.persuasioncheck}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      persuasioncheck: e.target.checked,
-                    })
-                  }
+                  onChange={saveCheckbox}
                 ></input>
                 <input
-                  type="text"
+                  type="number"
                   className="saving-throw-number"
-                  id="persuasion"
+                  name="persuasion"
                   value={character.persuasion}
-                  onChange={(e) =>
-                    setcharacter({ ...character, persuasion: e.target.value })
-                  }
+                  onChange={saveNumber}
                   placeholder="-1"
+                  min={-1}
+                  max={+20}
                 ></input>
                 <p>Persuasion (Cha)</p>
               </div>
               <div className="savingthrowline">
                 <input
                   type="checkbox"
-                  id="religioncheck"
+                  name="religioncheck"
                   checked={character.religioncheck}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      religioncheck: e.target.checked,
-                    })
-                  }
+                  onChange={saveCheckbox}
                 ></input>
                 <input
-                  type="text"
+                  type="number"
                   className="saving-throw-number"
-                  id="religion"
+                  name="religion"
                   value={character.religion}
-                  onChange={(e) =>
-                    setcharacter({ ...character, religion: e.target.value })
-                  }
+                  onChange={saveNumber}
+                  min={-1}
+                  max={+20}
                   placeholder="+1"
                 ></input>
                 <p>Religion (Int)</p>
@@ -777,27 +748,19 @@ function Sheet() {
               <div className="savingthrowline">
                 <input
                   type="checkbox"
-                  id="sleightofhandscheck"
+                  name="sleightofhandscheck"
                   checked={character.sleightofhandscheck}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      sleightofhandscheck: e.target.checked,
-                    })
-                  }
+                  onChange={saveCheckbox}
                   defaultChecked
                 ></input>
                 <input
-                  type="text"
+                  type="number"
                   className="saving-throw-number"
-                  id="sleightofhands"
+                  name="sleightofhands"
                   value={character.sleightofhands}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      sleightofhands: e.target.value,
-                    })
-                  }
+                  onChange={saveNumber}
+                  min={-1}
+                  max={+20}
                   placeholder="+2"
                 ></input>
                 <p>Sleight of Hand (Dex)</p>
@@ -805,24 +768,19 @@ function Sheet() {
               <div className="savingthrowline">
                 <input
                   type="checkbox"
-                  id="stealthcheck"
+                  name="stealthcheck"
                   checked={character.stealthcheck}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      stealthcheck: e.target.checked,
-                    })
-                  }
+                  onChange={saveCheckbox}
                   defaultChecked
                 ></input>
                 <input
-                  type="text"
+                  type="number"
                   className="saving-throw-number"
-                  id="stealth"
+                  name="stealth"
                   value={character.stealth}
-                  onChange={(e) =>
-                    setcharacter({ ...character, stealth: e.target.value })
-                  }
+                  onChange={saveNumber}
+                  min={-1}
+                  max={+20}
                   placeholder="+2"
                 ></input>
                 <p>Stealth (Dex)</p>
@@ -830,23 +788,18 @@ function Sheet() {
               <div className="savingthrowline">
                 <input
                   type="checkbox"
-                  id="survivalcheck"
+                  name="survivalcheck"
                   checked={character.survivalcheck}
-                  onChange={(e) =>
-                    setcharacter({
-                      ...character,
-                      survivalcheck: e.target.checked,
-                    })
-                  }
+                  onChange={saveCheckbox}
                 ></input>
                 <input
-                  type="text"
+                  type="number"
                   className="saving-throw-number"
-                  id="survival"
+                  name="survival"
                   value={character.survival}
-                  onChange={(e) =>
-                    setcharacter({ ...character, survival: e.target.value })
-                  }
+                  onChange={saveNumber}
+                  min={-1}
+                  max={+20}
                   placeholder="+2"
                 ></input>
                 <p>Survival (Wis)</p>
@@ -856,12 +809,12 @@ function Sheet() {
             <div className="passive-wisdom-box">
               <input
                 type="number"
-                id="passivewisdom"
+                name="passivewisdom"
                 value={character.passivewisdom}
-                onChange={(e) =>
-                  setcharacter({ ...character, passivewisdom: e.target.value })
-                }
+                onChange={saveNumber}
                 max={20}
+                min={-1}
+                placeholder="0"
                 className="passive-wisdom-input"
               ></input>
               <p>PASSIVE WISDOM (PERCEPTION)</p>
@@ -869,14 +822,9 @@ function Sheet() {
             <div>
               <textarea
                 className="proficiencies-textarea"
-                id="proficienciestextarea"
+                name="proficienciestextarea"
                 value={character.proficienciestextarea}
-                onChange={(e) =>
-                  setcharacter({
-                    ...character,
-                    proficienciestextarea: e.target.value,
-                  })
-                }
+                onChange={saveText}
                 placeholder="Armor: All armor, shields.
 Weapons: Simple weapons, martial weapons.
 Tools: None."
@@ -892,22 +840,22 @@ Tools: None."
               <input
                 type="number"
                 placeholder="14"
-                id="armor"
+                name="armor"
                 value={character.armor}
-                onChange={(e) =>
-                  setcharacter({ ...character, armor: e.target.value })
-                }
+                onChange={saveNumber}
+                min={9}
+                max={50}
               ></input>
               <p>Armor class</p>
             </div>
             <div className="armorbox">
               <input
                 type="number"
-                id="initiative"
+                name="initiative"
                 value={character.initiative}
-                onChange={(e) =>
-                  setcharacter({ ...character, initiative: e.target.value })
-                }
+                onChange={saveNumber}
+                min={-1}
+                max={20}
                 placeholder="0"
               ></input>
               <p>Initiative</p>
@@ -915,11 +863,11 @@ Tools: None."
             <div className="armorbox">
               <input
                 type="number"
-                id="speed"
+                name="speed"
                 value={character.speed}
-                onChange={(e) =>
-                  setcharacter({ ...character, speed: e.target.value })
-                }
+                onChange={saveNumber}
+                min={0}
+                max={150}
                 placeholder="30"
               ></input>
               <p>Speed</p>
@@ -928,31 +876,25 @@ Tools: None."
           <p>CURRENT HIT POINTS</p>
           <textarea
             placeholder="Hit Point Maximum  13"
-            id="currenthitpoints"
+            name="currenthitpoints"
             value={character.currenthitpoints}
-            onChange={(e) =>
-              setcharacter({ ...character, currenthitpoints: e.target.value })
-            }
+            onChange={saveText}
           ></textarea>
           <p>TEMPORARY HIT POINTS</p>
           <textarea
             placeholder="1"
-            id="temporaryhitpoints"
+            name="temporaryhitpoints"
             value={character.temporaryhitpoints}
-            onChange={(e) =>
-              setcharacter({ ...character, temporaryhitpoints: e.target.value })
-            }
+            onChange={saveText}
           ></textarea>
           <div className="hit-dice-box">
             <div>
               <p>HIT DICE</p>
               <textarea
                 className="hit-dice-textarea"
-                id="hitdice"
+                name="hitdice"
                 value={character.hitdice}
-                onChange={(e) =>
-                  setcharacter({ ...character, hitdice: e.target.value })
-                }
+                onChange={saveText}
                 placeholder="Total 1d10 + 3"
               ></textarea>
             </div>
@@ -961,48 +903,42 @@ Tools: None."
               <div className="deathcheckboxes">
                 <p>SUCCESSES</p>
                 <input
+                  name="succes1"
                   checked={character.succes1}
-                  onChange={(e) =>
-                    setcharacter({ ...character, succes1: e.target.checked })
-                  }
+                  onChange={saveCheckbox}
                   type="checkbox"
                 ></input>
                 <input
+                  name="succes2"
                   checked={character.succes2}
-                  onChange={(e) =>
-                    setcharacter({ ...character, succes2: e.target.checked })
-                  }
+                  onChange={saveCheckbox}
                   type="checkbox"
                 ></input>
                 <input
+                  name="succes3"
                   checked={character.succes3}
-                  onChange={(e) =>
-                    setcharacter({ ...character, succes3: e.target.checked })
-                  }
+                  onChange={saveCheckbox}
                   type="checkbox"
                 ></input>
               </div>
               <div className="deathcheckboxes">
                 <p>FAILURES</p>
                 <input
+                  name="fail1"
                   checked={character.fail1}
-                  onChange={(e) =>
-                    setcharacter({ ...character, fail1: e.target.checked })
-                  }
+                  onChange={saveCheckbox}
                   type="checkbox"
                 ></input>
                 <input
+                  name="fail2"
                   checked={character.fail2}
-                  onChange={(e) =>
-                    setcharacter({ ...character, fail2: e.target.checked })
-                  }
+                  onChange={saveCheckbox}
                   type="checkbox"
                 ></input>
                 <input
+                  name="fail3"
                   checked={character.fail3}
-                  onChange={(e) =>
-                    setcharacter({ ...character, fail3: e.target.checked })
-                  }
+                  onChange={saveCheckbox}
                   type="checkbox"
                 ></input>
               </div>
@@ -1020,33 +956,29 @@ Tools: None."
                   <input
                     type="text"
                     placeholder="Rapier"
-                    id="weapon1"
+                    name="weapon1"
                     value={character.weapon1}
-                    onChange={(e) =>
-                      setcharacter({ ...character, weapon1: e.target.value })
-                    }
+                    onChange={saveText}
                   ></input>
                 </th>
                 <th>
                   <input
-                    type="text"
+                    type="number"
                     placeholder="+2"
-                    id="atkbonus1"
+                    name="atkbonus1"
                     value={character.atkbonus1}
-                    onChange={(e) =>
-                      setcharacter({ ...character, atkbonus1: e.target.value })
-                    }
+                    onChange={saveNumber}
+                    min={-2}
+                    max={30}
                   ></input>
                 </th>
                 <th>
                   <input
                     type="text"
                     placeholder="1d8 + 0, Piercing"
-                    id="dmg1"
+                    name="dmg1"
                     value={character.dmg1}
-                    onChange={(e) =>
-                      setcharacter({ ...character, dmg1: e.target.value })
-                    }
+                    onChange={saveText}
                   ></input>
                 </th>
               </tr>
@@ -1055,33 +987,29 @@ Tools: None."
                   <input
                     type="text"
                     placeholder="Heavy Crossbow"
-                    id="weapon2"
+                    name="weapon2"
                     value={character.weapon2}
-                    onChange={(e) =>
-                      setcharacter({ ...character, weapon2: e.target.value })
-                    }
+                    onChange={saveText}
                   ></input>
                 </th>
                 <th>
                   <input
-                    type="text"
+                    type="number"
                     placeholder="+2"
-                    id="atkbonus2"
+                    name="atkbonus2"
                     value={character.atkbonus2}
-                    onChange={(e) =>
-                      setcharacter({ ...character, atkbonus2: e.target.value })
-                    }
+                    onChange={saveNumber}
+                    min={-2}
+                    max={30}
                   ></input>
                 </th>
                 <th>
                   <input
                     type="text"
                     placeholder="1d10 + 0, Piercing"
-                    id="dmg2"
+                    name="dmg2"
                     value={character.dmg2}
-                    onChange={(e) =>
-                      setcharacter({ ...character, dmg2: e.target.value })
-                    }
+                    onChange={saveText}
                   ></input>
                 </th>
               </tr>
@@ -1090,22 +1018,20 @@ Tools: None."
                   <input
                     type="text"
                     placeholder="Longsword"
-                    id="weapon3"
+                    name="weapon3"
                     value={character.weapon3}
-                    onChange={(e) =>
-                      setcharacter({ ...character, weapon3: e.target.value })
-                    }
+                    onChange={saveText}
                   ></input>
                 </th>
                 <th>
                   <input
-                    type="text"
+                    type="number"
                     placeholder="+4"
-                    id="atkbonus3"
+                    name="atkbonus3"
                     value={character.atkbonus3}
-                    onChange={(e) =>
-                      setcharacter({ ...character, atkbonus3: e.target.value })
-                    }
+                    onChange={saveNumber}
+                    min={-2}
+                    max={30}
                   ></input>
                 </th>
                 <th>

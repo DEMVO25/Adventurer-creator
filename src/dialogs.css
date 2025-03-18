@@ -1,0 +1,18 @@
+.diceMenu::backdrop{
+
+        pointer-events: none; /* Prevents blocking interactions */
+        background: transparent;
+
+}
+.diceMenu{
+    position: absolute; /* Free position */
+  top: 50px;
+  left: 50px;
+  background: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  z-index: 1000; /* Make sure it appears on top */
+  pointer-events: auto;
+}
