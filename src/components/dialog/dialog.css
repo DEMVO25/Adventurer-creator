@@ -1,0 +1,29 @@
+.dialog {
+  position: absolute; /* Free position */
+  top: 0px;
+  left: 0px;
+  background: rgba(0, 0, 0, 0.5);
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  margin: 0px;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  z-index: 1000; /* Make sure it appears on top */
+  pointer-events: auto;
+}
+
+.dialog-closed {
+  display: none;
+}
+
+.dialog-content {
+  text-align: center;
+  height: 50%;
+  width: 50%;
+  background: white;
+}

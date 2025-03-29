@@ -11,12 +11,6 @@ function Menu({ username }) {
   const dialogEdit = useRef(null);
   const dialogDelete = useRef(null);
 
-  useEffect(() => {
-    if (!username) {
-      navigate("/");
-    }
-  }, []);
-
   function toggleDialog(dialog) {
     if (dialog.current) {
       dialog.current.hasAttribute("open")
@@ -41,7 +35,7 @@ function Menu({ username }) {
         alert("An error occurred while fetching characters.");
       }
     };
-
+    
     if (username) {
       fetchCharacters();
     }

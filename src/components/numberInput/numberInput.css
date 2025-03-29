@@ -1,0 +1,25 @@
+.number-container {
+    margin: 10px;
+  }
+  
+  .number-container input {
+    padding-left: 20px; /* Space for the + sign */
+    text-align: right;
+  }
+  
+  .number-container::before {
+    max-height: 1px;
+    content: "+";
+    position: relative;
+    left: 10px;
+    top: 1px  ;
+    color: black;
+    font-size: 16px;
+    display: none;
+    pointer-events: none;
+  }
+  
+  .number-container.positive::before {
+    display: block;
+    
+  }

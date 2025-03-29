@@ -1,11 +1,10 @@
 .diceMenu::backdrop{
-
-        pointer-events: none; /* Prevents blocking interactions */
-        background: transparent;
-
+  pointer-events: none; /* Prevents blocking interactions */
+  background: transparent;
 }
+
 .diceMenu{
-    position: absolute; /* Free position */
+  position: relative; /* Free position */
   top: 50px;
   left: 50px;
   background: white;

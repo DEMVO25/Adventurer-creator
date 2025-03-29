@@ -1,12 +1,20 @@
 import "./spellsheet.css";
 import { useLocation } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
-import DiceMenu, { toggledialog } from "./dialogs";
+import { useEffect, useState } from "react";
+import DiceMenu from "./components/diceMenu";
+import { DialogType } from "./sheet";
 
 function Spellsheet() {
-  const location = useLocation();
+  const [currDialogType, setCurrDialogType] = useState(null);
+  const handleCurrDialogType = (e) => {
+    setCurrDialogType(e.target.name);
+  };
 
-  const menuRef = useRef(null);
+  const closeDialog = () => {
+    setCurrDialogType(null);
+  };
+
+  const location = useLocation();
 
   const [spells, setspells] = useState({});
 
@@ -58,8 +66,9 @@ function Spellsheet() {
           </div>
         </div>
         <div>
-          <button onClick={() => toggledialog(menuRef)}>Dice Menu</button>
-          <DiceMenu menuRef={menuRef}></DiceMenu>
+          <button name={DialogType.DiceMenu} onClick={handleCurrDialogType}>
+            Dice Menu
+          </button>
           <button onClick={submithandlers}>Save</button>
         </div>
         <h3>Cantrips</h3>
@@ -143,6 +152,10 @@ function Spellsheet() {
           placeholder="wish"
         ></textarea>
       </div>
+      <DiceMenu
+        open={currDialogType == DialogType.DiceMenu}
+        closeForm={closeDialog}
+      />
     </div>
   );
 }

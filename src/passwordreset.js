@@ -1,8 +1,7 @@
 import React, { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import Dialog from "./components/dialog";
 
-function Passwordreset() {
-  const navigate = useNavigate();
+function Passwordreset({open, closeForm}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -83,7 +82,7 @@ function Passwordreset() {
       if (response.ok) {
         alert("Password updated successfully!");
         toggledialog(newPasswordDialogRef);
-        navigate("/");
+        closeForm();
       } else {
         alert(data.message);
       }
@@ -94,41 +93,43 @@ function Passwordreset() {
   };
 
   return (
-    <div>
-      <input
-        placeholder="Enter your username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <button onClick={usernametest}>TEST</button>
-
-      <dialog className="modal-content" ref={dialogref}>
-        <p>Enter the reset code sent to your email:</p>
+    <Dialog open={open} closeForm={closeForm} title="Password Change">
+      <div>
         <input
-          placeholder="Enter the code here"
-          value={resetToken}
-          onChange={(e) => setResetToken(e.target.value.trim())}
+          placeholder="Enter your username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
         />
-        <button onClick={verifyresetToken}>Submit Code</button>
-      </dialog>
+        <button onClick={usernametest}>TEST</button>
 
-      <dialog className="modal-content" ref={newPasswordDialogRef}>
-        <p>Enter your new password:</p>
-        <input
-          type="password"
-          placeholder="New password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Confirm new password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        ></input>
-        <button onClick={submitNewPassword}>Update Password</button>
-      </dialog>
-    </div>
+        <dialog className="modal-content" ref={dialogref}>
+          <p>Enter the reset code sent to your email:</p>
+          <input
+            placeholder="Enter the code here"
+            value={resetToken}
+            onChange={(e) => setResetToken(e.target.value.trim())}
+          />
+          <button onClick={verifyresetToken}>Submit Code</button>
+        </dialog>
+
+        <dialog className="modal-content" ref={newPasswordDialogRef}>
+          <p>Enter your new password:</p>
+          <input
+            type="password"
+            placeholder="New password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Confirm new password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          ></input>
+          <button onClick={submitNewPassword}>Update Password</button>
+        </dialog>
+      </div>
+    </Dialog>
   );
 }
 
