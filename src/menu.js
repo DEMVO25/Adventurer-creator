@@ -19,6 +19,11 @@ function Menu({ username }) {
     }
   }
 
+  function handleLogout() {
+    localStorage.removeItem("jwt-token");
+    window.location.reload();
+  }
+
   useEffect(() => {
     const fetchCharacters = async () => {
       try {
@@ -35,7 +40,7 @@ function Menu({ username }) {
         alert("An error occurred while fetching characters.");
       }
     };
-    
+
     if (username) {
       fetchCharacters();
     }
@@ -115,6 +120,12 @@ function Menu({ username }) {
       });
 
       const data = await response.json();
+
+      if (data.message === "Character already exists") {
+        alert(data.message);
+        return;
+      }
+
       if (response.ok) {
         setButtons((prevButtons) => [...prevButtons, { text }]);
         setText("");
@@ -136,6 +147,7 @@ function Menu({ username }) {
     <div>
       <h1>Menu page</h1>
       <div>{username}</div>
+      <button onClick={handleLogout}>Log out</button>
       <input
         type="text"
         value={text}

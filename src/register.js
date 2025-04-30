@@ -32,7 +32,7 @@ function Register({ open, closeForm }) {
       alert("User  created successfully!");
       closeForm();
     } else {
-      alert("An error occurred. Please try again.");
+      alert(data.message);
     }
   };
 

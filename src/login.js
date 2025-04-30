@@ -118,11 +118,11 @@ function Login({ username, setUsername, children }) {
         </form>
       </div>
       <Passwordreset
-        open={currDialogType == DialogType.passwordreset}
+        open={currDialogType === DialogType.passwordreset}
         closeForm={closeDialog}
       />
       <Register
-        open={currDialogType == DialogType.register}
+        open={currDialogType === DialogType.register}
         closeForm={closeDialog}
       />
     </>

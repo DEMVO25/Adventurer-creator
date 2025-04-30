@@ -3,13 +3,14 @@ import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DiceMenu from "./components/diceMenu";
 import { DialogType } from "./sheet";
+import { useNavigate } from "react-router-dom";
 
 function Spellsheet() {
   const [currDialogType, setCurrDialogType] = useState(null);
   const handleCurrDialogType = (e) => {
     setCurrDialogType(e.target.name);
   };
-
+  const navigate = useNavigate();
   const closeDialog = () => {
     setCurrDialogType(null);
   };
@@ -48,8 +49,15 @@ function Spellsheet() {
     });
   }
 
+  function returnPage(){
+    navigate(-1)
+  }
+
   return (
     <div className="spellsheet">
+      <button onClick={returnPage}>
+        Back
+      </button>
       <h1>Spellsheet</h1>
       <div>
         <div className="Characterspecs">
@@ -153,7 +161,7 @@ function Spellsheet() {
         ></textarea>
       </div>
       <DiceMenu
-        open={currDialogType == DialogType.DiceMenu}
+        open={currDialogType === DialogType.DiceMenu}
         closeForm={closeDialog}
       />
     </div>

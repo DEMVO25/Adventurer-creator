@@ -9,7 +9,7 @@ export const DialogType = {
   DiceMenu: "diceMenu",
 };
 
-function Sheet() {
+function Sheet({characterName, setcharacterName}) {
   const [currDialogType, setCurrDialogType] = useState(null);
   const navigate = useNavigate();
   const spellslots3 = 3;
@@ -131,14 +131,22 @@ function Sheet() {
   }
   function submitspells() {
     navigate("/spellsheet", {
-      state: { characterName: location.state.characterName },
+      state: { name: location.state.characterName },
     });
   }
+
+  function returnPage(){
+    navigate(-1);
+  }
+
 
   return (
     <>
       <div className="App">
         <div className="upper-body-box">
+          <button onClick={returnPage}>
+            back
+          </button>
           <div className="Upper-body">
             <p>Adventurer name</p>
             {location.state.characterName}
@@ -1101,7 +1109,7 @@ function Sheet() {
                   return (
                     <input
                       type="checkbox"
-                      name={`spellslot1Checkbox.${i}`} // spellslot1Checkbox.0, spellslot1Checkbox.1
+                      name={`spellslot1Checkbox.${i}`}
                       checked={x}
                       onChange={setCheckboxes}
                     ></input>
@@ -1391,7 +1399,7 @@ function Sheet() {
         </div>
       </div>
       <DiceMenu
-        open={currDialogType == DialogType.DiceMenu}
+        open={currDialogType === DialogType.DiceMenu}
         closeForm={closeDialog}
       />
     </>
